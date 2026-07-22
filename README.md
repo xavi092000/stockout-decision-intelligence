@@ -82,38 +82,18 @@ Rather than maximizing a benchmark score, the objective is to demonstrate produc
 ## High-Level Architecture
 
 ```mermaid
-flowchart TD
-    A[Historical Observations] --> B[Reality Calibration]
-    B --> C[Deterministic Scenario Generation]
-    C --> D[Persistent Retail Simulation]
-    D --> E[Leakage-Safe Snapshot Extraction]
-    E --> F[Policy Learning]
-    F --> G[Closed-Loop Benchmark Engine]
+graph LR
+    A[Reality Calibration] --> B[Scenario Generation]
+    B --> C[Persistent Retail Simulation]
+    C --> D[Leakage-Safe Dataset Builder]
+    C --> E[Economic Evaluation Engine]
+    D --> F[Policy Learning]
+    E --> G[Closed-Loop Benchmark]
+    F --> G
     G --> H[Policy Governance]
     H --> I[Decision Intelligence]
     I --> J[Operational Recommendation]
-
-    D -. Sequential business state .-> G
-    G -. Benchmark evidence .-> H
-    H -. Approved policy .-> I
-```
-
-```mermaid
-flowchart LR
-    Calibration["Reality Calibration"] --> Scenario["Scenario Generation"]
-    Scenario --> Simulation["Persistent Retail Simulation"]
-    Simulation --> Dataset["Leakage-Safe Dataset Builder"]
-    Simulation --> Economic["Economic Evaluation Engine"]
-    Dataset --> Learning["Policy Learning"]
-    Economic --> Benchmark["Closed-Loop Benchmark"]
-    Learning --> Benchmark
-    Benchmark --> Governance["Policy Governance"]
-    Governance --> Decision["Decision Intelligence"]
-    Decision --> Recommendation["Business Recommendation"]
-```
-
----
-
+`$([Environment]::NewLine)
 ## Platform Layers
 
 | Layer | Responsibility |
@@ -527,9 +507,9 @@ The repository is organized around the main engineering responsibilities of the 
 |-- docs/                    # Scientific and engineering audits
 |-- simulation/              # Core simulation, ML, governance, and Decision Intelligence
 |-- tests/                   # Automated regression and validation tests
-|-- Dockerfile              # Reproducible container environment
-|-- requirements.txt        # Python dependencies
-|-- pytest.ini              # Test configuration
+|-- Dockerfile               # Reproducible container environment
+|-- requirements.txt         # Python dependencies
+|-- pytest.ini               # Test configuration
 `-- README.md
 ```
 
