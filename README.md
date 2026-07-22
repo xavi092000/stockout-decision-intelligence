@@ -518,35 +518,18 @@ Operational deployment requires versioning, benchmark evidence, traceability, an
 
 ## Repository Structure
 
-The repository is organized around the actual engineering responsibilities of the platform:
+The repository is organized around the main engineering responsibilities of the platform:
 
 ```text
 .
-|-- .github/
-|   `-- workflows/                  # Automated tests and Docker validation
-|-- artifacts/
-|   |-- policy_training/            # Trained model, metadata, and benchmark evidence
-|   |-- statistical_validation/     # Statistical validation reports
-|   `-- synthetic_generation/       # Synthetic scenario validation evidence
-|-- docs/
-|   `-- audits/                     # Causal, ML-design, and sequential-decision audits
-|-- simulation/
-|   |-- application/                # Application orchestration and adaptive runners
-|   |-- decision/                   # Operational policies and decision adapters
-|   |-- decision_intelligence/      # Risk, confidence, explanation, and reporting
-|   |-- domain/                     # Core business entities and factories
-|   |-- engines/                    # Inventory, supplier, sales, and financial engines
-|   |-- governance/                 # Policy registry and lifecycle management
-|   |-- infrastructure/             # Persistence and repository abstractions
-|   |-- ml/                         # Dataset construction and policy-learning components
-|   |-- scripts/                    # Executable simulation and benchmark workflows
-|   |-- tests/                      # Simulation-specific automated tests
-|   |-- validation/                 # Scientific and economic validation protocols
-|   `-- world/                      # Persistent supply-chain world state
-|-- tests/                          # Cross-cutting regression and validation tests
-|-- Dockerfile                     # Reproducible container environment
-|-- requirements.txt               # Python dependencies
-|-- pytest.ini                     # Test configuration
+|-- .github/                 # CI workflows and Docker validation
+|-- artifacts/               # Trained models, benchmarks, and validation reports
+|-- docs/                    # Scientific and engineering audits
+|-- simulation/              # Core simulation, ML, governance, and Decision Intelligence
+|-- tests/                   # Automated regression and validation tests
+|-- Dockerfile              # Reproducible container environment
+|-- requirements.txt        # Python dependencies
+|-- pytest.ini              # Test configuration
 `-- README.md
 ```
 
