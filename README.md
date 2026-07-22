@@ -1,4 +1,4 @@
-# Stockout Decision Intelligence Platform
+﻿# Stockout Decision Intelligence Platform
 
 [![CI](https://github.com/xavi092000/stockout-decision-intelligence/actions/workflows/ci.yml/badge.svg?branch=feature%2Fsupply-chain-simulator)](https://github.com/xavi092000/stockout-decision-intelligence/actions/workflows/ci.yml)
 
@@ -51,7 +51,15 @@ The platform combines software engineering and machine learning into a modular a
 > **Business result:** the learned policy produced a mean Net Business Value improvement of **+$206,585.95**, while increasing service level by **2.11 percentage points** across 30 unseen simulation seeds.
 
 ---
+
+## Business Impact
+
+![Business Impact of the ML Decision Policy](docs/assets/policy_performance_comparison.png)
+
+---
+
 ## Engineering Metrics
+
 
 | Metric | Value |
 |---|---:|
@@ -630,3 +638,4 @@ The resulting architecture enables candidate policies to be trained, evaluated, 
 **Key Takeaway**
 
 This repository demonstrates how production AI systems can be engineered, benchmarked, governed, validated, and continuously improved through reproducible Decision Intelligence workflows rather than isolated predictive models.
+
