@@ -82,7 +82,7 @@ Rather than maximizing a benchmark score, the objective is to demonstrate produc
 ## High-Level Architecture
 
 ```mermaid
-graph LR
+flowchart LR
     A[Reality Calibration] --> B[Scenario Generation]
     B --> C[Persistent Retail Simulation]
     C --> D[Leakage-Safe Dataset Builder]
@@ -93,6 +93,7 @@ graph LR
     G --> H[Policy Governance]
     H --> I[Decision Intelligence]
     I --> J[Operational Recommendation]
+```
 
 ## Platform Layers
 
@@ -171,48 +172,19 @@ This transforms the problem from supervised prediction into operational Decision
 
 ```mermaid
 flowchart LR
-
-subgraph Input
-    HIST[Historical Data]
-    CONFIG[Business Configuration]
-end
-
-subgraph Simulation
-    CAL[Reality Calibration]
-    SCEN[Scenario Generator]
-    WORLD[Persistent Retail World]
-    ECON[Economic Engine]
-end
-
-subgraph Learning
-    DATA[Leakage-Safe Dataset Builder]
-    MODEL[Policy Learning]
-end
-
-subgraph Evaluation
-    BENCH[Closed-Loop Benchmark]
-    VALID[Statistical Validation]
-    GOV[Policy Governance]
-end
-
-subgraph Intelligence
-    DI[Decision Intelligence]
-    REC[Business Recommendation]
-end
-
-HIST --> CAL
-CONFIG --> SCEN
-CAL --> SCEN
-SCEN --> WORLD
-WORLD --> ECON
-WORLD --> DATA
-DATA --> MODEL
-MODEL --> BENCH
-ECON --> BENCH
-BENCH --> VALID
-VALID --> GOV
-GOV --> DI
-DI --> REC
+    HIST[Historical Data] --> CAL[Reality Calibration]
+    CONFIG[Business Configuration] --> SCEN[Scenario Generator]
+    CAL --> SCEN
+    SCEN --> WORLD[Persistent Retail World]
+    WORLD --> ECON[Economic Engine]
+    WORLD --> DATA[Leakage-Safe Dataset Builder]
+    DATA --> MODEL[Policy Learning]
+    MODEL --> BENCH[Closed-Loop Benchmark]
+    ECON --> BENCH
+    BENCH --> VALID[Statistical Validation]
+    VALID --> GOV[Policy Governance]
+    GOV --> DI[Decision Intelligence]
+    DI --> REC[Business Recommendation]
 ```
 
 The platform is organized into independent layers.
@@ -381,13 +353,13 @@ Machine learning models are treated as operational assets rather than standalone
 
 ```mermaid
 flowchart LR
-    Train --> Validate
-    Validate --> Benchmark
-    Benchmark --> Registry
-    Registry --> Champion
-    Champion --> Deploy
-    Deploy --> Monitor
-    Monitor --> Replace
+    A[Train Candidate] --> B[Validate]
+    B --> C[Benchmark]
+    C --> D[Policy Registry]
+    D --> E[Champion Resolution]
+    E --> F[Deploy]
+    F --> G[Monitor]
+    G --> H[Replace or Retain]
 ```
 
 Governance responsibilities include:
@@ -535,66 +507,17 @@ The architecture is organized by engineering responsibility rather than by deplo
 
 ## End-to-End Workflow
 
-
 ```mermaid
 flowchart TD
-
-A[Current Business State]
---> B[Leakage-Safe Features]
-
-B --> C[Policy Model]
-
-C --> D{Decision}
-
-D -->|DO_NOTHING| E1[Keep Strategy]
-D -->|ORDER_NORMAL| E2[Normal Replenishment]
-D -->|ORDER_EXPEDITE| E3[Expedited Order]
-D -->|TRANSFER_STOCK| E4[Inventory Transfer]
-
-E1 --> F
-E2 --> F
-E3 --> F
-E4 --> F
-
-F[Update Persistent Retail World]
---> G[Economic Evaluation]
-
-G --> H[Business Metrics]
-
-H --> I[Next Business State]
-
-I --> A
-```
-
-```text
-Historical Observations
-        |
-        v
-Reality Calibration
-        |
-        v
-Deterministic Scenario Generation
-        |
-        v
-Persistent Retail Simulation
-        |
-        v
-Leakage-Safe Snapshot Extraction
-        |
-        v
-Policy Learning
-        |
-        v
-Closed-Loop Benchmark Engine
-        |
-        v
-Policy Governance
-        |
-        v
-Decision Intelligence
-        |
-        v
-Operational Recommendation
+    A[Historical Observations] --> B[Reality Calibration]
+    B --> C[Deterministic Scenario Generation]
+    C --> D[Persistent Retail Simulation]
+    D --> E[Leakage-Safe Snapshot Extraction]
+    E --> F[Policy Learning]
+    F --> G[Closed-Loop Benchmark Engine]
+    G --> H[Policy Governance]
+    H --> I[Decision Intelligence]
+    I --> J[Operational Recommendation]
 ```
 
 Every stage has a clearly defined responsibility, enabling independent validation, testing, and future evolution.
