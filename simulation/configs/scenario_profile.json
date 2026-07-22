@@ -1,0 +1,125 @@
+{
+  "profile_name": "quebec_grocery_mvp",
+  "version": "1.0.0",
+  "description": "Initial configurable assumptions for a Quebec grocery supply-chain simulation.",
+
+  "weather": {
+    "winter": {
+      "temperature_mean_c": -7.0,
+      "temperature_std_c": 8.0,
+      "condition_weights": {
+        "clear": 0.25,
+        "cloudy": 0.35,
+        "snow": 0.25,
+        "snowstorm": 0.08,
+        "freezing_rain": 0.07
+      }
+    },
+    "spring": {
+      "temperature_mean_c": 10.0,
+      "temperature_std_c": 7.0,
+      "condition_weights": {
+        "clear": 0.30,
+        "cloudy": 0.35,
+        "rain": 0.30,
+        "storm": 0.05
+      }
+    },
+    "summer": {
+      "temperature_mean_c": 22.0,
+      "temperature_std_c": 6.0,
+      "condition_weights": {
+        "clear": 0.45,
+        "cloudy": 0.25,
+        "rain": 0.20,
+        "storm": 0.07,
+        "heatwave": 0.03
+      }
+    },
+    "autumn": {
+      "temperature_mean_c": 9.0,
+      "temperature_std_c": 7.0,
+      "condition_weights": {
+        "clear": 0.25,
+        "cloudy": 0.40,
+        "rain": 0.30,
+        "storm": 0.05
+      }
+    }
+  },
+
+  "promotions": {
+    "start_probability_per_store_sku_day": 0.002,
+    "duration_days_min": 3,
+    "duration_days_max": 7,
+    "demand_multiplier_min": 1.20,
+    "demand_multiplier_max": 1.60,
+    "minimum_available_stock_ratio": 0.50
+  },
+
+  "supplier_events": {
+    "delay_probability_per_due_delivery": 0.08,
+    "delay_days_min": 1,
+    "delay_days_max": 4,
+    "partial_delivery_probability_per_delivery": 0.04,
+    "partial_delivery_ratio_min": 0.50,
+    "partial_delivery_ratio_max": 0.90,
+    "supplier_outage_probability_per_supplier_day": 0.0005,
+    "supplier_outage_duration_days_min": 3,
+    "supplier_outage_duration_days_max": 10
+  },
+
+  "inventory_events": {
+    "damage_probability_per_store_sku_day": 0.0008,
+    "damage_ratio_min": 0.02,
+    "damage_ratio_max": 0.08,
+    "inventory_error_probability_per_store_sku_day": 0.001,
+    "inventory_error_ratio_min": -0.10,
+    "inventory_error_ratio_max": 0.10
+  },
+
+  "calendar_effects": {
+    "weekday_multipliers": {
+      "0": 0.90,
+      "1": 0.92,
+      "2": 0.95,
+      "3": 1.00,
+      "4": 1.12,
+      "5": 1.25,
+      "6": 1.10
+    },
+    "holiday_demand_multiplier_min": 1.15,
+    "holiday_demand_multiplier_max": 1.45
+  },
+
+  "category_weather_effects": {
+    "heatwave": {
+      "beverages": 1.50,
+      "dairy": 1.12,
+      "frozen": 1.35,
+      "snacks": 1.08,
+      "household": 1.00
+    },
+    "snowstorm": {
+      "beverages": 0.90,
+      "dairy": 1.08,
+      "frozen": 1.05,
+      "snacks": 1.15,
+      "household": 1.30
+    },
+    "rain": {
+      "beverages": 0.96,
+      "dairy": 1.00,
+      "frozen": 0.98,
+      "snacks": 1.04,
+      "household": 1.02
+    }
+  },
+
+  "validation_limits": {
+    "maximum_promotion_multiplier": 3.0,
+    "maximum_simultaneous_events_per_day": 5,
+    "minimum_temperature_c": -40.0,
+    "maximum_temperature_c": 42.0
+  }
+}

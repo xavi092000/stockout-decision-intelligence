@@ -1,0 +1,104 @@
+# =========================
+# Python
+# =========================
+
+.venv/
+__pycache__/
+.pytest_cache/
+
+*.pyc
+*.pyo
+*.pyd
+
+# =========================
+# OS
+# =========================
+
+.DS_Store
+Thumbs.db
+
+# =========================
+# Archives
+# =========================
+
+*.zip
+*.7z
+*.tar
+*.gz
+
+# =========================
+# Backup directories
+# =========================
+
+backup_*/
+*.backup_*
+
+# =========================
+# Runtime dumps
+# =========================
+
+engine_dump.txt
+artifacts_tree.txt
+*_tree.txt
+
+# =========================
+# Generated data
+# =========================
+
+data/analysis/
+data/profiling/
+
+# =========================
+# Python caches
+# =========================
+
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# =========================
+# IDE
+# =========================
+
+.vscode/
+.idea/
+
+# =========================
+# Simulation outputs
+# =========================
+
+simulation/output/
+
+# =========================
+# Generated training data
+# =========================
+
+data/training/
+
+# =========================
+# Generated model artifacts
+# =========================
+
+artifacts/policy_training/*.joblib
+artifacts/policy_training/*_confusion_matrix.json
+artifacts/policy_training/*_classification_report.json
+
+# =========================
+# Profiling outputs
+# =========================
+
+*.prof
+
+# =========================
+# Temporary audit files
+# =========================
+
+github_cleanup_audit.txt
+train_policy_comparison.txt
+!artifacts/policy_training/decision_tree.joblib
+venv/
+env/
+**/__pycache__/
+*.py[cod]
+data/

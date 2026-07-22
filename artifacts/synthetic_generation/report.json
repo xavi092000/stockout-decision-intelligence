@@ -1,0 +1,335 @@
+{
+  "digest": "d7068f5772bbbb80a15c834343eb6629c5bd631e29f406f7eebfad55c2df652b",
+  "metrics": [
+    {
+      "details": {
+        "duplicate_count": 0
+      },
+      "expected": "<= 0.0",
+      "name": "scenario_id_uniqueness",
+      "observed": 0.0,
+      "passed": true,
+      "sample_size": 18250
+    },
+    {
+      "details": {
+        "unique_fingerprints": 18174
+      },
+      "expected": ">= 0.55",
+      "name": "business_state_diversity",
+      "observed": 0.99583562,
+      "passed": true,
+      "sample_size": 18250
+    },
+    {
+      "details": {
+        "coverage_ratio": 1.0,
+        "missing": []
+      },
+      "expected": [
+        "FOODS",
+        "HOBBIES",
+        "HOUSEHOLD"
+      ],
+      "name": "calibration_coverage:category",
+      "observed": [
+        "FOODS",
+        "HOBBIES",
+        "HOUSEHOLD"
+      ],
+      "passed": true,
+      "sample_size": 18250
+    },
+    {
+      "details": {
+        "coverage_ratio": 1.0,
+        "missing": []
+      },
+      "expected": [
+        "FOODS_1",
+        "FOODS_2",
+        "FOODS_3",
+        "HOBBIES_1",
+        "HOBBIES_2",
+        "HOUSEHOLD_1",
+        "HOUSEHOLD_2"
+      ],
+      "name": "calibration_coverage:department",
+      "observed": [
+        "FOODS_1",
+        "FOODS_2",
+        "FOODS_3",
+        "HOBBIES_1",
+        "HOBBIES_2",
+        "HOUSEHOLD_1",
+        "HOUSEHOLD_2"
+      ],
+      "passed": true,
+      "sample_size": 18250
+    },
+    {
+      "details": {
+        "coverage_ratio": 1.0,
+        "missing": []
+      },
+      "expected": [
+        "CA_1",
+        "CA_2",
+        "CA_3",
+        "CA_4",
+        "TX_1",
+        "TX_2",
+        "TX_3",
+        "WI_1",
+        "WI_2",
+        "WI_3"
+      ],
+      "name": "calibration_coverage:store",
+      "observed": [
+        "CA_1",
+        "CA_2",
+        "CA_3",
+        "CA_4",
+        "TX_1",
+        "TX_2",
+        "TX_3",
+        "WI_1",
+        "WI_2",
+        "WI_3"
+      ],
+      "passed": true,
+      "sample_size": 18250
+    },
+    {
+      "details": {
+        "coverage_ratio": 1.0,
+        "missing": []
+      },
+      "expected": [
+        "CA",
+        "TX",
+        "WI"
+      ],
+      "name": "calibration_coverage:state",
+      "observed": [
+        "CA",
+        "TX",
+        "WI"
+      ],
+      "passed": true,
+      "sample_size": 18250
+    },
+    {
+      "details": {
+        "coverage_ratio": 1.0,
+        "missing": []
+      },
+      "expected": [
+        "erratic",
+        "intermittent",
+        "lumpy",
+        "smooth"
+      ],
+      "name": "calibration_coverage:demand_class",
+      "observed": [
+        "erratic",
+        "intermittent",
+        "lumpy",
+        "smooth"
+      ],
+      "passed": true,
+      "sample_size": 18250
+    },
+    {
+      "details": {
+        "coverage_ratio": 1.0,
+        "missing": []
+      },
+      "expected": [
+        "cost_pressure",
+        "expansion",
+        "inflationary_growth",
+        "stable"
+      ],
+      "name": "calibration_coverage:economic_regime",
+      "observed": [
+        "cost_pressure",
+        "expansion",
+        "inflationary_growth",
+        "stable"
+      ],
+      "passed": true,
+      "sample_size": 18250
+    },
+    {
+      "details": {
+        "missing": []
+      },
+      "expected": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "name": "calendar_coverage:month",
+      "observed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "passed": true,
+      "sample_size": 18250
+    },
+    {
+      "details": {
+        "missing": []
+      },
+      "expected": [
+        "autumn",
+        "spring",
+        "summer",
+        "winter"
+      ],
+      "name": "calendar_coverage:season",
+      "observed": [
+        "autumn",
+        "spring",
+        "summer",
+        "winter"
+      ],
+      "passed": true,
+      "sample_size": 18250
+    },
+    {
+      "details": {
+        "missing": []
+      },
+      "expected": [
+        "Friday",
+        "Monday",
+        "Saturday",
+        "Sunday",
+        "Thursday",
+        "Tuesday",
+        "Wednesday"
+      ],
+      "name": "calendar_coverage:weekday",
+      "observed": [
+        "Friday",
+        "Monday",
+        "Saturday",
+        "Sunday",
+        "Thursday",
+        "Tuesday",
+        "Wednesday"
+      ],
+      "passed": true,
+      "sample_size": 18250
+    },
+    {
+      "details": {
+        "missing": []
+      },
+      "expected": [
+        "extreme_cold",
+        "extreme_heat",
+        "heavy_precipitation"
+      ],
+      "name": "event_coverage:weather",
+      "observed": [
+        "extreme_cold",
+        "extreme_heat",
+        "heavy_precipitation"
+      ],
+      "passed": true,
+      "sample_size": 18250
+    },
+    {
+      "details": {
+        "missing": []
+      },
+      "expected": [
+        "competitor_promotion",
+        "inventory_count_error",
+        "local_event_demand_spike",
+        "supplier_delay",
+        "truck_breakdown",
+        "warehouse_capacity_constraint"
+      ],
+      "name": "event_coverage:operational",
+      "observed": [
+        "competitor_promotion",
+        "inventory_count_error",
+        "local_event_demand_spike",
+        "supplier_delay",
+        "truck_breakdown",
+        "warehouse_capacity_constraint"
+      ],
+      "passed": true,
+      "sample_size": 18250
+    },
+    {
+      "details": {
+        "examples": [],
+        "violations": 0
+      },
+      "expected": "<= 0.0",
+      "name": "hierarchy_integrity",
+      "observed": 0.0,
+      "passed": true,
+      "sample_size": 18250
+    },
+    {
+      "details": {
+        "examples": [],
+        "multi_regime_months": {},
+        "violations": 0
+      },
+      "expected": "<= 0.0",
+      "name": "temporal_coherence",
+      "observed": 0.0,
+      "passed": true,
+      "sample_size": 18250
+    },
+    {
+      "details": {
+        "historical_trajectory_rows": 0,
+        "metadata_contract_rows": 18250
+      },
+      "expected": "<= 0.0",
+      "name": "synthetic_leakage_guard",
+      "observed": 0.0,
+      "passed": true,
+      "sample_size": 18250
+    },
+    {
+      "details": {
+        "reference_supplied": true
+      },
+      "expected": "d7068f5772bbbb80a15c834343eb6629c5bd631e29f406f7eebfad55c2df652b",
+      "name": "seed_reproducibility",
+      "observed": "d7068f5772bbbb80a15c834343eb6629c5bd631e29f406f7eebfad55c2df652b",
+      "passed": true,
+      "sample_size": 18250
+    }
+  ],
+  "passed": true,
+  "sample_size": 18250
+}

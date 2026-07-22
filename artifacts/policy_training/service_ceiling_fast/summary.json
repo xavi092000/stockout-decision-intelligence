@@ -1,0 +1,65 @@
+{
+  "protocol": "fast_service_ceiling_probe",
+  "warning": "This is an aggressive non-production policy, not a clairvoyant mathematical oracle. It estimates whether the simulator can approach the target when service is prioritized.",
+  "seeds": [
+    131,
+    132,
+    133,
+    134,
+    135
+  ],
+  "target_days_of_cover": 45.0,
+  "service_target": 0.95,
+  "average_service_level": 1.0,
+  "minimum_service_level": 1.0,
+  "maximum_service_level": 1.0,
+  "target_reached_on_average": true,
+  "wall_clock_seconds": 35.64270350000879,
+  "runs": [
+    {
+      "seed": 131,
+      "service_level": 1.0,
+      "business_value": 2410948.1499999985,
+      "total_cost": 9513391.850000001,
+      "unmet_demand": 0,
+      "stockouts": 0,
+      "runtime_seconds": 34.76988450001227
+    },
+    {
+      "seed": 132,
+      "service_level": 1.0,
+      "business_value": 2813949.5999999996,
+      "total_cost": 11037690.4,
+      "unmet_demand": 0,
+      "stockouts": 0,
+      "runtime_seconds": 34.56184239999857
+    },
+    {
+      "seed": 133,
+      "service_level": 1.0,
+      "business_value": 3192911.6499999985,
+      "total_cost": 13112088.350000001,
+      "unmet_demand": 0,
+      "stockouts": 0,
+      "runtime_seconds": 33.94427780000842
+    },
+    {
+      "seed": 134,
+      "service_level": 1.0,
+      "business_value": 3336877.0,
+      "total_cost": 13263783.0,
+      "unmet_demand": 0,
+      "stockouts": 0,
+      "runtime_seconds": 34.44175109999196
+    },
+    {
+      "seed": 135,
+      "service_level": 1.0,
+      "business_value": 3265532.75,
+      "total_cost": 12726227.25,
+      "unmet_demand": 0,
+      "stockouts": 0,
+      "runtime_seconds": 35.36598529999901
+    }
+  ]
+}

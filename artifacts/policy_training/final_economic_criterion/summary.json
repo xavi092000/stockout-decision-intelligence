@@ -1,0 +1,1153 @@
+{
+  "protocol": "calibrate_then_freeze_then_evaluate",
+  "criterion": "V2 criterion 5 \u2014 economic usefulness under service constraint",
+  "anti_leakage": {
+    "calibration_and_evaluation_seeds_disjoint": true,
+    "policy_uses_decision_time_information_only": true,
+    "evaluation_configuration_frozen_before_evaluation": true
+  },
+  "thresholds": {
+    "service_floor": 0.95,
+    "minimum_value_win_rate": 0.6,
+    "minimum_joint_win_rate": 0.5,
+    "minimum_episodes": 30
+  },
+  "selected_config": {
+    "target_days_of_cover": 14,
+    "expedite_trigger_days": 3,
+    "minimum_order_quantity": 1
+  },
+  "calibration_seeds": [
+    201,
+    202,
+    203,
+    204,
+    205,
+    206,
+    207,
+    208
+  ],
+  "evaluation_seeds": [
+    301,
+    302,
+    303,
+    304,
+    305,
+    306,
+    307,
+    308,
+    309,
+    310,
+    311,
+    312,
+    313,
+    314,
+    315,
+    316,
+    317,
+    318,
+    319,
+    320,
+    321,
+    322,
+    323,
+    324,
+    325,
+    326,
+    327,
+    328,
+    329,
+    330
+  ],
+  "calibration": [
+    {
+      "target_days_of_cover": 14,
+      "expedite_trigger_days": 3,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 8422133.20625,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 14,
+      "expedite_trigger_days": 5,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 8422133.20625,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 14,
+      "expedite_trigger_days": 7,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 8421856.00625,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 14,
+      "expedite_trigger_days": 10,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 8372464.600000001,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 14,
+      "expedite_trigger_days": 14,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 6157070.79375,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 18,
+      "expedite_trigger_days": 3,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 8184702.83125,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 18,
+      "expedite_trigger_days": 5,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 8184702.83125,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 18,
+      "expedite_trigger_days": 7,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 8184293.33125,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 18,
+      "expedite_trigger_days": 10,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 8140961.881250001,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 18,
+      "expedite_trigger_days": 14,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 8050545.55,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 21,
+      "expedite_trigger_days": 3,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 8002594.825,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 21,
+      "expedite_trigger_days": 5,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 8002594.825,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 21,
+      "expedite_trigger_days": 7,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 8002085.575,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 21,
+      "expedite_trigger_days": 10,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 7946906.84375,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 21,
+      "expedite_trigger_days": 14,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 7878488.05625,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 21,
+      "expedite_trigger_days": 21,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 4954244.706250001,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 24,
+      "expedite_trigger_days": 3,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 7812872.78125,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 24,
+      "expedite_trigger_days": 5,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 7812872.78125,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 24,
+      "expedite_trigger_days": 7,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 7812263.78125,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 24,
+      "expedite_trigger_days": 10,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 7745163.36875,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 24,
+      "expedite_trigger_days": 14,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 7679993.5625,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 24,
+      "expedite_trigger_days": 21,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 7540252.18125,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 28,
+      "expedite_trigger_days": 3,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 7557943.8,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 28,
+      "expedite_trigger_days": 5,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 7557943.8,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 28,
+      "expedite_trigger_days": 7,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 7557202.5,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 28,
+      "expedite_trigger_days": 10,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 7474221.75,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 28,
+      "expedite_trigger_days": 14,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 7392708.9125,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 28,
+      "expedite_trigger_days": 21,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 7336412.69375,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 32,
+      "expedite_trigger_days": 3,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 7302313.287500001,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 32,
+      "expedite_trigger_days": 5,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 7302313.287500001,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 32,
+      "expedite_trigger_days": 7,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 7301439.162500001,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 32,
+      "expedite_trigger_days": 10,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 7202598.575,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 32,
+      "expedite_trigger_days": 14,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 7104047.16875,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 32,
+      "expedite_trigger_days": 21,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 7087325.5375,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 32,
+      "expedite_trigger_days": 30,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 5145924.31875,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 36,
+      "expedite_trigger_days": 3,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 7045878.95,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 36,
+      "expedite_trigger_days": 5,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 7045878.95,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 36,
+      "expedite_trigger_days": 7,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 7044872.0,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 36,
+      "expedite_trigger_days": 10,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 6930182.625,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 36,
+      "expedite_trigger_days": 14,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 6814596.40625,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 36,
+      "expedite_trigger_days": 21,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 6812685.593750001,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 36,
+      "expedite_trigger_days": 30,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 6700654.125,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 40,
+      "expedite_trigger_days": 3,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 6789003.61875,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 40,
+      "expedite_trigger_days": 5,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 6789003.61875,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 40,
+      "expedite_trigger_days": 7,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 6787863.84375,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 40,
+      "expedite_trigger_days": 10,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 6657274.118749999,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 40,
+      "expedite_trigger_days": 14,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 6524662.9625,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 40,
+      "expedite_trigger_days": 21,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 6524662.9625,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 40,
+      "expedite_trigger_days": 30,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 6456086.899999999,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 45,
+      "expedite_trigger_days": 3,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 6467278.40625,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 45,
+      "expedite_trigger_days": 5,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 6467278.40625,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 45,
+      "expedite_trigger_days": 7,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 6465972.731249999,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 45,
+      "expedite_trigger_days": 10,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 6315158.3,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 45,
+      "expedite_trigger_days": 14,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 6161251.31875,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 45,
+      "expedite_trigger_days": 21,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 6161251.31875,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 45,
+      "expedite_trigger_days": 30,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 6138780.125,
+      "feasible": true
+    },
+    {
+      "target_days_of_cover": 45,
+      "expedite_trigger_days": 45,
+      "average_service_level": 1.0,
+      "minimum_service_level": 1.0,
+      "average_business_value": 3152573.1624999996,
+      "feasible": true
+    }
+  ],
+  "evaluation": {
+    "candidate_average_service_level": 1.0,
+    "candidate_average_business_value": 8358190.761666667,
+    "baseline_average_service_level": 0.7470673598762083,
+    "baseline_average_business_value": 3779009.2066666665,
+    "average_service_delta": 0.25293264012379163,
+    "service_delta_ci95": [
+      0.20772236230014743,
+      0.29814291794743586
+    ],
+    "average_value_delta": 4579181.555,
+    "value_delta_ci95": [
+      3768712.4031624957,
+      5389650.706837503
+    ],
+    "value_win_rate": 0.9333333333333333,
+    "service_non_degradation_rate": 1,
+    "joint_win_rate": 0.9333333333333333,
+    "candidate_runs": [
+      {
+        "seed": 301,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 8109748.15,
+        "total_cost": 6215191.85,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 90.05684019997716
+      },
+      {
+        "seed": 302,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 7434307.55,
+        "total_cost": 5643532.45,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 88.91251019999618
+      },
+      {
+        "seed": 303,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 9554242.55,
+        "total_cost": 7349197.449999999,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 90.2047598999925
+      },
+      {
+        "seed": 304,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 9037463.100000001,
+        "total_cost": 6909196.899999999,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 90.30641040002229
+      },
+      {
+        "seed": 305,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 8982328.6,
+        "total_cost": 6893811.4,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 92.95325040002353
+      },
+      {
+        "seed": 306,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 9117151.2,
+        "total_cost": 6973208.8,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 94.36807729999418
+      },
+      {
+        "seed": 307,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 8584545.9,
+        "total_cost": 6517174.1,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 94.38612519999151
+      },
+      {
+        "seed": 308,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 8190570.2,
+        "total_cost": 6263289.8,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 93.06954070000211
+      },
+      {
+        "seed": 309,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 8600376.85,
+        "total_cost": 6712243.15,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 94.20414420001907
+      },
+      {
+        "seed": 310,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 7377536.15,
+        "total_cost": 5641903.85,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 96.58624979999149
+      },
+      {
+        "seed": 311,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 7941943.95,
+        "total_cost": 6135316.05,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 94.19137630000478
+      },
+      {
+        "seed": 312,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 7769402.9,
+        "total_cost": 6015957.1,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 94.40677299999516
+      },
+      {
+        "seed": 313,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 8704920.95,
+        "total_cost": 6679239.05,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 95.25948639999842
+      },
+      {
+        "seed": 314,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 9085817.95,
+        "total_cost": 7034462.05,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 96.20388660000754
+      },
+      {
+        "seed": 315,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 8288044.8,
+        "total_cost": 6327535.2,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 96.18183750001481
+      },
+      {
+        "seed": 316,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 8003142.199999999,
+        "total_cost": 6303077.800000001,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 94.50586450000992
+      },
+      {
+        "seed": 317,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 8591869.75,
+        "total_cost": 6565950.25,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 94.90573609998683
+      },
+      {
+        "seed": 318,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 8337471.15,
+        "total_cost": 6436388.85,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 96.16987049998716
+      },
+      {
+        "seed": 319,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 10298076.6,
+        "total_cost": 7896403.4,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 99.06475270001101
+      },
+      {
+        "seed": 320,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 7866616.550000001,
+        "total_cost": 6053723.449999999,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 103.17428419998032
+      },
+      {
+        "seed": 321,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 7689954.75,
+        "total_cost": 5907505.25,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 99.3952830999915
+      },
+      {
+        "seed": 322,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 8230556.2,
+        "total_cost": 6339883.8,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 99.22436480000033
+      },
+      {
+        "seed": 323,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 7488346.65,
+        "total_cost": 5816373.35,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 98.72311580000678
+      },
+      {
+        "seed": 324,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 7049199.2,
+        "total_cost": 5352920.8,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 98.58365210000193
+      },
+      {
+        "seed": 325,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 8156739.3,
+        "total_cost": 6156660.7,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 97.04931740000029
+      },
+      {
+        "seed": 326,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 8475175.149999999,
+        "total_cost": 6571484.850000001,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 94.13393010001164
+      },
+      {
+        "seed": 327,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 9603096.6,
+        "total_cost": 7448503.4,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 94.24562319999677
+      },
+      {
+        "seed": 328,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 8841284.65,
+        "total_cost": 6724835.35,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 93.41691920001176
+      },
+      {
+        "seed": 329,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 6220684.55,
+        "total_cost": 4781775.45,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 92.45722280000336
+      },
+      {
+        "seed": 330,
+        "policy": "economic_constrained",
+        "service_level": 1.0,
+        "business_value": 9115108.75,
+        "total_cost": 7128551.25,
+        "unmet_demand": 0,
+        "stockouts": 0,
+        "runtime_seconds": 89.21369669999694
+      }
+    ],
+    "baseline_runs": [
+      {
+        "seed": 301,
+        "policy": "rule_based",
+        "service_level": 0.7065530561869832,
+        "business_value": 2580182.5999999996,
+        "total_cost": 7552777.4,
+        "unmet_demand": 210422,
+        "stockouts": 13368,
+        "runtime_seconds": 11.238140800007386
+      },
+      {
+        "seed": 302,
+        "policy": "rule_based",
+        "service_level": 0.7050371383923584,
+        "business_value": 2419139.1500000004,
+        "total_cost": 6793820.85,
+        "unmet_demand": 192719,
+        "stockouts": 11003,
+        "runtime_seconds": 17.17790939999395
+      },
+      {
+        "seed": 303,
+        "policy": "rule_based",
+        "service_level": 0.8173180270739918,
+        "business_value": 5824623.7,
+        "total_cost": 7984716.3,
+        "unmet_demand": 154329,
+        "stockouts": 8306,
+        "runtime_seconds": 28.574511799990432
+      },
+      {
+        "seed": 304,
+        "policy": "rule_based",
+        "service_level": 0.7828961730808318,
+        "business_value": 4232612.6,
+        "total_cost": 8247347.4,
+        "unmet_demand": 173040,
+        "stockouts": 9790,
+        "runtime_seconds": 17.822492900013458
+      },
+      {
+        "seed": 305,
+        "policy": "rule_based",
+        "service_level": 0.7628986149417112,
+        "business_value": 4195535.95,
+        "total_cost": 7925504.05,
+        "unmet_demand": 188355,
+        "stockouts": 9987,
+        "runtime_seconds": 17.733546800009208
+      },
+      {
+        "seed": 306,
+        "policy": "rule_based",
+        "service_level": 0.7871475587910678,
+        "business_value": 4536212.65,
+        "total_cost": 8101567.35,
+        "unmet_demand": 170869,
+        "stockouts": 8294,
+        "runtime_seconds": 23.941571299976204
+      },
+      {
+        "seed": 307,
+        "policy": "rule_based",
+        "service_level": 0.5850919502578745,
+        "business_value": 468622.8499999996,
+        "total_cost": 8355137.15,
+        "unmet_demand": 312861,
+        "stockouts": 19664,
+        "runtime_seconds": 6.138664300000528
+      },
+      {
+        "seed": 308,
+        "policy": "rule_based",
+        "service_level": 0.677748748335958,
+        "business_value": 2538338.3,
+        "total_cost": 7257001.7,
+        "unmet_demand": 232871,
+        "stockouts": 12674,
+        "runtime_seconds": 14.646118000004208
+      },
+      {
+        "seed": 309,
+        "policy": "rule_based",
+        "service_level": 0.9973853067823992,
+        "business_value": 8966517.9,
+        "total_cost": 6306902.1,
+        "unmet_demand": 2002,
+        "stockouts": 544,
+        "runtime_seconds": 95.3556125999894
+      },
+      {
+        "seed": 310,
+        "policy": "rule_based",
+        "service_level": 0.6674727895128232,
+        "business_value": 957324.8499999996,
+        "total_cost": 7731195.15,
+        "unmet_demand": 216426,
+        "stockouts": 13437,
+        "runtime_seconds": 6.00185239998973
+      },
+      {
+        "seed": 311,
+        "policy": "rule_based",
+        "service_level": 0.7447533915957383,
+        "business_value": 3041336.55,
+        "total_cost": 7413243.45,
+        "unmet_demand": 179153,
+        "stockouts": 10443,
+        "runtime_seconds": 13.838443900021957
+      },
+      {
+        "seed": 312,
+        "policy": "rule_based",
+        "service_level": 0.8710756326674592,
+        "business_value": 5678113.35,
+        "total_cost": 6323026.65,
+        "unmet_demand": 88812,
+        "stockouts": 4829,
+        "runtime_seconds": 54.00160289998166
+      },
+      {
+        "seed": 313,
+        "policy": "rule_based",
+        "service_level": 0.7308683766150198,
+        "business_value": 3607276.3499999996,
+        "total_cost": 7637323.65,
+        "unmet_demand": 207033,
+        "stockouts": 12966,
+        "runtime_seconds": 16.541760399995837
+      },
+      {
+        "seed": 314,
+        "policy": "rule_based",
+        "service_level": 0.8651530059408901,
+        "business_value": 6917887.1,
+        "total_cost": 6974912.9,
+        "unmet_demand": 108270,
+        "stockouts": 8385,
+        "runtime_seconds": 62.82375480001792
+      },
+      {
+        "seed": 315,
+        "policy": "rule_based",
+        "service_level": 0.5850908971510501,
+        "business_value": 566612.1500000004,
+        "total_cost": 7986667.85,
+        "unmet_demand": 303272,
+        "stockouts": 17511,
+        "runtime_seconds": 5.472987599991029
+      },
+      {
+        "seed": 316,
+        "policy": "rule_based",
+        "service_level": 0.9999636314805904,
+        "business_value": 8580608.7,
+        "total_cost": 5716951.3,
+        "unmet_demand": 26,
+        "stockouts": 5,
+        "runtime_seconds": 101.30294429999776
+      },
+      {
+        "seed": 317,
+        "policy": "rule_based",
+        "service_level": 0.715359670590474,
+        "business_value": 2566471.8,
+        "total_cost": 8260468.2,
+        "unmet_demand": 215401,
+        "stockouts": 11780,
+        "runtime_seconds": 10.389435300021432
+      },
+      {
+        "seed": 318,
+        "policy": "rule_based",
+        "service_level": 0.7101572046610634,
+        "business_value": 3256196.95,
+        "total_cost": 7239543.05,
+        "unmet_demand": 214186,
+        "stockouts": 13880,
+        "runtime_seconds": 20.072524899995187
+      },
+      {
+        "seed": 319,
+        "policy": "rule_based",
+        "service_level": 0.8648916956582511,
+        "business_value": 7227425.4,
+        "total_cost": 8489334.6,
+        "unmet_demand": 122759,
+        "stockouts": 4887,
+        "runtime_seconds": 69.4552437000093
+      },
+      {
+        "seed": 320,
+        "policy": "rule_based",
+        "service_level": 0.6104113551289906,
+        "business_value": 1750638.2999999998,
+        "total_cost": 6758361.7,
+        "unmet_demand": 271539,
+        "stockouts": 17499,
+        "runtime_seconds": 15.633713499992155
+      },
+      {
+        "seed": 321,
+        "policy": "rule_based",
+        "service_level": 0.5228396695186851,
+        "business_value": -84764.65000000037,
+        "total_cost": 7197684.65,
+        "unmet_demand": 324574,
+        "stockouts": 25038,
+        "runtime_seconds": 5.994372400018619
+      },
+      {
+        "seed": 322,
+        "policy": "rule_based",
+        "service_level": 0.8161148175603328,
+        "business_value": 4610856.4,
+        "total_cost": 7279283.6,
+        "unmet_demand": 133953,
+        "stockouts": 6945,
+        "runtime_seconds": 35.06783600000199
+      },
+      {
+        "seed": 323,
+        "policy": "rule_based",
+        "service_level": 0.7844884751466451,
+        "business_value": 3885197.3,
+        "total_cost": 6549142.7,
+        "unmet_demand": 143324,
+        "stockouts": 9113,
+        "runtime_seconds": 28.125108899985207
+      },
+      {
+        "seed": 324,
+        "policy": "rule_based",
+        "service_level": 0.6622396244724786,
+        "business_value": 866057.4500000002,
+        "total_cost": 7350402.55,
+        "unmet_demand": 209531,
+        "stockouts": 13535,
+        "runtime_seconds": 5.894295299978694
+      },
+      {
+        "seed": 325,
+        "policy": "rule_based",
+        "service_level": 0.6614087111746803,
+        "business_value": 1668802.4500000002,
+        "total_cost": 7801657.55,
+        "unmet_demand": 242408,
+        "stockouts": 13333,
+        "runtime_seconds": 14.14296959998319
+      },
+      {
+        "seed": 326,
+        "policy": "rule_based",
+        "service_level": 0.8116036081082698,
+        "business_value": 5443759.4,
+        "total_cost": 6762320.6,
+        "unmet_demand": 141669,
+        "stockouts": 9034,
+        "runtime_seconds": 35.781192200025544
+      },
+      {
+        "seed": 327,
+        "policy": "rule_based",
+        "service_level": 0.9340200402965091,
+        "business_value": 8562862.5,
+        "total_cost": 7356257.5,
+        "unmet_demand": 56227,
+        "stockouts": 3900,
+        "runtime_seconds": 57.71545170000172
+      },
+      {
+        "seed": 328,
+        "policy": "rule_based",
+        "service_level": 0.6504592167927451,
+        "business_value": 1745273.25,
+        "total_cost": 8375286.75,
+        "unmet_demand": 271927,
+        "stockouts": 12194,
+        "runtime_seconds": 16.66875899999286
+      },
+      {
+        "seed": 329,
+        "policy": "rule_based",
+        "service_level": 0.5025006959011875,
+        "business_value": -280150.4500000002,
+        "total_cost": 5804110.45,
+        "unmet_demand": 273449,
+        "stockouts": 23668,
+        "runtime_seconds": 5.938127200002782
+      },
+      {
+        "seed": 330,
+        "policy": "rule_based",
+        "service_level": 0.8790717124691916,
+        "business_value": 7040705.35,
+        "total_cost": 7211754.65,
+        "unmet_demand": 98031,
+        "stockouts": 5290,
+        "runtime_seconds": 42.03877579999971
+      }
+    ]
+  },
+  "checks": {
+    "minimum_episodes": true,
+    "service_floor": true,
+    "positive_average_value_delta": true,
+    "value_ci95_above_zero": true,
+    "minimum_value_win_rate": true,
+    "minimum_joint_win_rate": true
+  },
+  "accepted": true,
+  "wall_clock_seconds": 16774.101876800007
+}

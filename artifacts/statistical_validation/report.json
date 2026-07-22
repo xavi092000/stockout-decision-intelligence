@@ -1,0 +1,546 @@
+{
+  "metrics": [
+    {
+      "error": 0.00128505,
+      "expected": {
+        "FOODS": 0.6863484022148336,
+        "HOBBIES": 0.09323025905813297,
+        "HOUSEHOLD": 0.22042133872703343
+      },
+      "metric": "total_variation_distance",
+      "name": "category_distribution",
+      "observed": {
+        "FOODS": 0.687013698630137,
+        "HOBBIES": 0.09194520547945205,
+        "HOUSEHOLD": 0.22104109589041096
+      },
+      "passed": true,
+      "sample_size": 18250,
+      "threshold": 0.08
+    },
+    {
+      "error": 0.00782185,
+      "expected": {
+        "CA_1": 0.11718042580418368,
+        "CA_2": 0.08654295766695053,
+        "CA_3": 0.17030383356011988,
+        "CA_4": 0.06246518687477842,
+        "TX_1": 0.08517021334017422,
+        "TX_2": 0.10981564937056715,
+        "TX_3": 0.09269034309535999,
+        "WI_1": 0.07837780566979956,
+        "WI_2": 0.09961140511355977,
+        "WI_3": 0.09784217950450694
+      },
+      "metric": "total_variation_distance",
+      "name": "store_distribution",
+      "observed": {
+        "CA_1": 0.11934246575342465,
+        "CA_2": 0.08635616438356164,
+        "CA_3": 0.17117808219178082,
+        "CA_4": 0.062246575342465756,
+        "TX_1": 0.08224657534246575,
+        "TX_2": 0.11128767123287671,
+        "TX_3": 0.09189041095890411,
+        "WI_1": 0.07468493150684931,
+        "WI_2": 0.09961643835616438,
+        "WI_3": 0.10115068493150685
+      },
+      "passed": true,
+      "sample_size": 18250,
+      "threshold": 0.08
+    },
+    {
+      "error": 0.00352572,
+      "expected": {
+        "erratic": 0.01630042636930141,
+        "intermittent": 0.7576910462446704,
+        "lumpy": 0.19386684158740572,
+        "smooth": 0.0321416857986225
+      },
+      "metric": "total_variation_distance",
+      "name": "demand_class_distribution",
+      "observed": {
+        "erratic": 0.015506849315068493,
+        "intermittent": 0.754958904109589,
+        "lumpy": 0.19517808219178082,
+        "smooth": 0.03435616438356164
+      },
+      "passed": true,
+      "sample_size": 18250,
+      "threshold": 0.08
+    },
+    {
+      "error": 0.02050408,
+      "expected": {
+        "cost_pressure": 0.3002223869532987,
+        "expansion": 0.6464047442550037,
+        "inflationary_growth": 0.01927353595255745,
+        "stable": 0.0340993328391401
+      },
+      "metric": "total_variation_distance",
+      "name": "economic_regime_distribution_by_month",
+      "observed": {
+        "cost_pressure": 0.30833333333333335,
+        "expansion": 0.6266666666666667,
+        "inflationary_growth": 0.03166666666666667,
+        "stable": 0.03333333333333333
+      },
+      "passed": true,
+      "sample_size": 600,
+      "threshold": 0.08
+    },
+    {
+      "error": 0.00246575,
+      "expected": 0.14,
+      "metric": "absolute_probability_error",
+      "name": "promotion_frequency",
+      "observed": 0.14246575,
+      "passed": true,
+      "sample_size": 18250,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.00072603,
+      "expected": 0.025,
+      "metric": "absolute_probability_error",
+      "name": "operational_event_frequency:supplier_delay",
+      "observed": 0.02427397,
+      "passed": true,
+      "sample_size": 18250,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.00063014,
+      "expected": 0.01,
+      "metric": "absolute_probability_error",
+      "name": "operational_event_frequency:truck_breakdown",
+      "observed": 0.00936986,
+      "passed": true,
+      "sample_size": 18250,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.00145205,
+      "expected": 0.018,
+      "metric": "absolute_probability_error",
+      "name": "operational_event_frequency:warehouse_capacity_constraint",
+      "observed": 0.01654795,
+      "passed": true,
+      "sample_size": 18250,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.00057534,
+      "expected": 0.03,
+      "metric": "absolute_probability_error",
+      "name": "operational_event_frequency:competitor_promotion",
+      "observed": 0.02942466,
+      "passed": true,
+      "sample_size": 18250,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.00205479,
+      "expected": 0.022,
+      "metric": "absolute_probability_error",
+      "name": "operational_event_frequency:local_event_demand_spike",
+      "observed": 0.01994521,
+      "passed": true,
+      "sample_size": 18250,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.00032877,
+      "expected": 0.012,
+      "metric": "absolute_probability_error",
+      "name": "operational_event_frequency:inventory_count_error",
+      "observed": 0.01232877,
+      "passed": true,
+      "sample_size": 18250,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.05090127,
+      "expected": -8.60631068,
+      "metric": "normalized_mean_error",
+      "name": "temperature_mean_month:01",
+      "observed": -8.95308387,
+      "passed": true,
+      "sample_size": 1550,
+      "threshold": 0.2
+    },
+    {
+      "error": 0.00199395,
+      "expected": 0.61812298,
+      "metric": "absolute_probability_error",
+      "name": "precipitation_frequency_month:01",
+      "observed": 0.61612903,
+      "passed": true,
+      "sample_size": 1550,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.0,
+      "expected": 0.0,
+      "metric": "absolute_probability_error",
+      "name": "snow_frequency_month:01",
+      "observed": 0.0,
+      "passed": true,
+      "sample_size": 1550,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.03171513,
+      "expected": -7.386121,
+      "metric": "normalized_mean_error",
+      "name": "temperature_mean_month:02",
+      "observed": -7.57374381,
+      "passed": true,
+      "sample_size": 1413,
+      "threshold": 0.2
+    },
+    {
+      "error": 0.00243796,
+      "expected": 0.56939502,
+      "metric": "absolute_probability_error",
+      "name": "precipitation_frequency_month:02",
+      "observed": 0.57183298,
+      "passed": true,
+      "sample_size": 1413,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.0,
+      "expected": 0.0,
+      "metric": "absolute_probability_error",
+      "name": "snow_frequency_month:02",
+      "observed": 0.0,
+      "passed": true,
+      "sample_size": 1413,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.00284943,
+      "expected": -1.34551387,
+      "metric": "normalized_mean_error",
+      "name": "temperature_mean_month:03",
+      "observed": -1.32905161,
+      "passed": true,
+      "sample_size": 1550,
+      "threshold": 0.2
+    },
+    {
+      "error": 0.01350734,
+      "expected": 0.54649266,
+      "metric": "absolute_probability_error",
+      "name": "precipitation_frequency_month:03",
+      "observed": 0.56,
+      "passed": true,
+      "sample_size": 1550,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.0,
+      "expected": 0.0,
+      "metric": "absolute_probability_error",
+      "name": "snow_frequency_month:03",
+      "observed": 0.0,
+      "passed": true,
+      "sample_size": 1550,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.0248301,
+      "expected": 6.43062606,
+      "metric": "normalized_mean_error",
+      "name": "temperature_mean_month:04",
+      "observed": 6.31433333,
+      "passed": true,
+      "sample_size": 1500,
+      "threshold": 0.2
+    },
+    {
+      "error": 0.01920474,
+      "expected": 0.49746193,
+      "metric": "absolute_probability_error",
+      "name": "precipitation_frequency_month:04",
+      "observed": 0.51666667,
+      "passed": true,
+      "sample_size": 1500,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.0,
+      "expected": 0.0,
+      "metric": "absolute_probability_error",
+      "name": "snow_frequency_month:04",
+      "observed": 0.0,
+      "passed": true,
+      "sample_size": 1500,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.02744062,
+      "expected": 14.31647635,
+      "metric": "normalized_mean_error",
+      "name": "temperature_mean_month:05",
+      "observed": 14.44167097,
+      "passed": true,
+      "sample_size": 1550,
+      "threshold": 0.2
+    },
+    {
+      "error": 0.0031574,
+      "expected": 0.42251223,
+      "metric": "absolute_probability_error",
+      "name": "precipitation_frequency_month:05",
+      "observed": 0.41935484,
+      "passed": true,
+      "sample_size": 1550,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.0,
+      "expected": 0.0,
+      "metric": "absolute_probability_error",
+      "name": "snow_frequency_month:05",
+      "observed": 0.0,
+      "passed": true,
+      "sample_size": 1550,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.04075281,
+      "expected": 19.26486486,
+      "metric": "normalized_mean_error",
+      "name": "temperature_mean_month:06",
+      "observed": 19.41462,
+      "passed": true,
+      "sample_size": 1500,
+      "threshold": 0.2
+    },
+    {
+      "error": 0.0076982,
+      "expected": 0.44763514,
+      "metric": "absolute_probability_error",
+      "name": "precipitation_frequency_month:06",
+      "observed": 0.45533333,
+      "passed": true,
+      "sample_size": 1500,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.0,
+      "expected": 0.0,
+      "metric": "absolute_probability_error",
+      "name": "snow_frequency_month:06",
+      "observed": 0.0,
+      "passed": true,
+      "sample_size": 1500,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.08406955,
+      "expected": 22.19500832,
+      "metric": "normalized_mean_error",
+      "name": "temperature_mean_month:07",
+      "observed": 21.96184516,
+      "passed": true,
+      "sample_size": 1550,
+      "threshold": 0.2
+    },
+    {
+      "error": 0.04097043,
+      "expected": 0.42096506,
+      "metric": "absolute_probability_error",
+      "name": "precipitation_frequency_month:07",
+      "observed": 0.46193548,
+      "passed": true,
+      "sample_size": 1550,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.0,
+      "expected": 0.0,
+      "metric": "absolute_probability_error",
+      "name": "snow_frequency_month:07",
+      "observed": 0.0,
+      "passed": true,
+      "sample_size": 1550,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.01732154,
+      "expected": 20.98552189,
+      "metric": "normalized_mean_error",
+      "name": "temperature_mean_month:08",
+      "observed": 20.93201935,
+      "passed": true,
+      "sample_size": 1550,
+      "threshold": 0.2
+    },
+    {
+      "error": 0.01396329,
+      "expected": 0.42087542,
+      "metric": "absolute_probability_error",
+      "name": "precipitation_frequency_month:08",
+      "observed": 0.43483871,
+      "passed": true,
+      "sample_size": 1550,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.0,
+      "expected": 0.0,
+      "metric": "absolute_probability_error",
+      "name": "snow_frequency_month:08",
+      "observed": 0.0,
+      "passed": true,
+      "sample_size": 1550,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.04976212,
+      "expected": 16.81498316,
+      "metric": "normalized_mean_error",
+      "name": "temperature_mean_month:09",
+      "observed": 16.62160667,
+      "passed": true,
+      "sample_size": 1500,
+      "threshold": 0.2
+    },
+    {
+      "error": 0.03789226,
+      "expected": 0.41077441,
+      "metric": "absolute_probability_error",
+      "name": "precipitation_frequency_month:09",
+      "observed": 0.44866667,
+      "passed": true,
+      "sample_size": 1500,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.0,
+      "expected": 0.0,
+      "metric": "absolute_probability_error",
+      "name": "snow_frequency_month:09",
+      "observed": 0.0,
+      "passed": true,
+      "sample_size": 1500,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.01929614,
+      "expected": 9.99378238,
+      "metric": "normalized_mean_error",
+      "name": "temperature_mean_month:10",
+      "observed": 9.90629677,
+      "passed": true,
+      "sample_size": 1550,
+      "threshold": 0.2
+    },
+    {
+      "error": 0.01578249,
+      "expected": 0.47841105,
+      "metric": "absolute_probability_error",
+      "name": "precipitation_frequency_month:10",
+      "observed": 0.49419355,
+      "passed": true,
+      "sample_size": 1550,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.0,
+      "expected": 0.0,
+      "metric": "absolute_probability_error",
+      "name": "snow_frequency_month:10",
+      "observed": 0.0,
+      "passed": true,
+      "sample_size": 1550,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.05258793,
+      "expected": 2.49854545,
+      "metric": "normalized_mean_error",
+      "name": "temperature_mean_month:11",
+      "observed": 2.24595333,
+      "passed": true,
+      "sample_size": 1500,
+      "threshold": 0.2
+    },
+    {
+      "error": 0.03727273,
+      "expected": 0.51272727,
+      "metric": "absolute_probability_error",
+      "name": "precipitation_frequency_month:11",
+      "observed": 0.55,
+      "passed": true,
+      "sample_size": 1500,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.0,
+      "expected": 0.0,
+      "metric": "absolute_probability_error",
+      "name": "snow_frequency_month:11",
+      "observed": 0.0,
+      "passed": true,
+      "sample_size": 1500,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.01755513,
+      "expected": -4.16211073,
+      "metric": "normalized_mean_error",
+      "name": "temperature_mean_month:12",
+      "observed": -4.26739102,
+      "passed": true,
+      "sample_size": 1537,
+      "threshold": 0.2
+    },
+    {
+      "error": 0.02316786,
+      "expected": 0.60207612,
+      "metric": "absolute_probability_error",
+      "name": "precipitation_frequency_month:12",
+      "observed": 0.62524398,
+      "passed": true,
+      "sample_size": 1537,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.0,
+      "expected": 0.0,
+      "metric": "absolute_probability_error",
+      "name": "snow_frequency_month:12",
+      "observed": 0.0,
+      "passed": true,
+      "sample_size": 1537,
+      "threshold": 0.05
+    },
+    {
+      "error": 0.0,
+      "expected": 0.0,
+      "metric": "violation_rate",
+      "name": "product_hierarchy_violation_rate",
+      "observed": 0.0,
+      "passed": true,
+      "sample_size": 18250,
+      "threshold": 0.0
+    },
+    {
+      "error": 0.0,
+      "expected": 0.0,
+      "metric": "violation_rate",
+      "name": "location_hierarchy_violation_rate",
+      "observed": 0.0,
+      "passed": true,
+      "sample_size": 18250,
+      "threshold": 0.0
+    }
+  ],
+  "passed": true,
+  "sample_size": 18250
+}

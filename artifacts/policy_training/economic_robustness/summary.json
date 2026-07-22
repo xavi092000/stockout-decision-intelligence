@@ -1,0 +1,173 @@
+{
+  "start_seed": 101,
+  "episodes": 30,
+  "workers": 6,
+  "model_path": "C:\\Users\\felix\\stockout-prediction\\artifacts\\policy_training\\decision_tree.joblib",
+  "wall_clock_seconds": 2048.564316700009,
+  "paired_summary": {
+    "value_delta": {
+      "count": 30,
+      "mean": 206585.9450000001,
+      "median": 168887.57499999972,
+      "standard_deviation": 201725.18583236053,
+      "ci95_low": 134399.5143310939,
+      "ci95_high": 278772.37566890626,
+      "minimum": -92175.34999999963,
+      "maximum": 700396.9500000002
+    },
+    "service_delta": {
+      "count": 30,
+      "mean": 0.02106866606494439,
+      "median": 0.017017277382917695,
+      "standard_deviation": 0.01801019716102638,
+      "ci95_low": 0.014623799781474085,
+      "ci95_high": 0.027513532348414693,
+      "minimum": -0.006688701779724471,
+      "maximum": 0.06474686728572887
+    },
+    "cost_delta": {
+      "count": 30,
+      "mean": 105151.38833333328,
+      "median": 97396.47499999963,
+      "standard_deviation": 94704.03705253296,
+      "ci95_low": 71261.9839114214,
+      "ci95_high": 139040.79275524517,
+      "minimum": -86964.29999999981,
+      "maximum": 362543.0
+    },
+    "unmet_demand_delta": {
+      "count": 30,
+      "mean": -15468.7,
+      "median": -13118.0,
+      "standard_deviation": 13123.520278229596,
+      "ci95_low": -20164.89141897171,
+      "ci95_high": -10772.50858102829,
+      "minimum": -49951.0,
+      "maximum": 5575.0
+    },
+    "stockout_delta": {
+      "count": 30,
+      "mean": -1238.7,
+      "median": -951.0,
+      "standard_deviation": 1050.2538330294747,
+      "ci95_low": -1614.528507431585,
+      "ci95_high": -862.8714925684151,
+      "minimum": -3952.0,
+      "maximum": 76.0
+    },
+    "value_win_rate": 0.8333333333333334,
+    "service_win_rate": 0.9333333333333333,
+    "joint_value_service_win_rate": 0.8333333333333334
+  },
+  "economic_robustness": {
+    "accepted": false,
+    "failed_scenarios": [
+      "nominal",
+      "compressed_margin",
+      "high_holding_cost",
+      "high_service_failure_cost",
+      "high_logistics_cost"
+    ],
+    "worst_case_mean_value_delta": 133941.37833333333,
+    "scenario_results": [
+      {
+        "scenario": "nominal",
+        "accepted": false,
+        "mean_value_delta": 206585.9450000001,
+        "value_ci95_low": 134399.5143310939,
+        "value_ci95_high": 278772.37566890626,
+        "mean_service_delta": 0.02106866606494439,
+        "candidate_average_service_level": 0.7570668686322424,
+        "value_win_rate": 0.8333333333333334,
+        "joint_win_rate": 0.8333333333333334,
+        "failed_checks": [
+          "service_floor"
+        ],
+        "mandatory": true
+      },
+      {
+        "scenario": "compressed_margin",
+        "accepted": false,
+        "mean_value_delta": 152096.19833333357,
+        "value_ci95_low": 93827.94317121117,
+        "value_ci95_high": 210364.45349545596,
+        "mean_service_delta": 0.02106866606494439,
+        "candidate_average_service_level": 0.7570668686322424,
+        "value_win_rate": 0.8333333333333334,
+        "joint_win_rate": 0.8333333333333334,
+        "failed_checks": [
+          "service_floor"
+        ],
+        "mandatory": true
+      },
+      {
+        "scenario": "high_holding_cost",
+        "accepted": false,
+        "mean_value_delta": 194139.0566666667,
+        "value_ci95_low": 125117.83153473228,
+        "value_ci95_high": 263160.28179860115,
+        "mean_service_delta": 0.02106866606494439,
+        "candidate_average_service_level": 0.7570668686322424,
+        "value_win_rate": 0.8333333333333334,
+        "joint_win_rate": 0.8333333333333334,
+        "failed_checks": [
+          "service_floor"
+        ],
+        "mandatory": true
+      },
+      {
+        "scenario": "high_service_failure_cost",
+        "accepted": false,
+        "mean_value_delta": 268475.79500000004,
+        "value_ci95_low": 178490.03172431944,
+        "value_ci95_high": 358461.55827568064,
+        "mean_service_delta": 0.02106866606494439,
+        "candidate_average_service_level": 0.7570668686322424,
+        "value_win_rate": 0.8666666666666667,
+        "joint_win_rate": 0.8666666666666667,
+        "failed_checks": [
+          "service_floor"
+        ],
+        "mandatory": true
+      },
+      {
+        "scenario": "high_logistics_cost",
+        "accepted": false,
+        "mean_value_delta": 133941.37833333333,
+        "value_ci95_low": 74384.73418393909,
+        "value_ci95_high": 193498.02248272757,
+        "mean_service_delta": 0.02106866606494439,
+        "candidate_average_service_level": 0.7570668686322424,
+        "value_win_rate": 0.8,
+        "joint_win_rate": 0.8,
+        "failed_checks": [
+          "service_floor"
+        ],
+        "mandatory": true
+      }
+    ]
+  },
+  "economic_acceptance": {
+    "accepted": false,
+    "checks": {
+      "enough_episodes": true,
+      "service_floor": false,
+      "positive_mean_value": true,
+      "service_not_degraded": true,
+      "value_win_rate": true,
+      "joint_win_rate": true,
+      "positive_value_ci": true
+    },
+    "reasons": [
+      "service_floor"
+    ],
+    "criteria": {
+      "minimum_episodes": 30,
+      "minimum_service_level": 0.95,
+      "maximum_mean_service_degradation": 0.0,
+      "minimum_value_win_rate": 0.6,
+      "minimum_joint_win_rate": 0.5,
+      "require_positive_value_ci": true
+    }
+  }
+}

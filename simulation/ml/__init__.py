@@ -1,0 +1,23 @@
+"""Shared machine-learning contracts for the V2 decision platform."""
+
+from simulation.ml.feature_contract import (
+    CATEGORICAL_FEATURES,
+    EXPECTED_ACTIONS,
+    FEATURE_COLUMNS,
+    FEATURE_SCHEMA_VERSION,
+    IDENTIFIER_FEATURES,
+    NUMERIC_FEATURES,
+    PRE_DECISION_FEATURE_COLUMNS,
+    TARGET_COLUMN,
+)
+
+__all__ = [
+    "CATEGORICAL_FEATURES",
+    "EXPECTED_ACTIONS",
+    "FEATURE_COLUMNS",
+    "FEATURE_SCHEMA_VERSION",
+    "IDENTIFIER_FEATURES",
+    "NUMERIC_FEATURES",
+    "PRE_DECISION_FEATURE_COLUMNS",
+    "TARGET_COLUMN",
+]

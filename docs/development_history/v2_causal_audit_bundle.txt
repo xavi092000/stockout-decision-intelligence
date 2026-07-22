@@ -1,0 +1,926 @@
+===== supplier_v2.py =====
+from __future__ import annotations
+
+from dataclasses import asdict, dataclass
+from datetime import date, timedelta
+from random import Random
+from typing import Any
+
+from simulation.application.contracts import DailyScenario
+from simulation.domain.models import PurchaseOrder, WorldState
+
+
+class SupplierEngineV2Error(RuntimeError):
+    """Raised when supplier transitions violate domain invariants."""
+
+
+@dataclass(frozen=True)
+class SupplierReceipt:
+    receipt_id: str
+    order_id: str
+    simulation_day: int
+    date: str
+    store_id: str
+    sku_id: str
+    supplier_id: str
+    received_units: int
+    procurement_cost: float
+    logistics_cost: float
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+class SupplierEngineV2:
+    def __init__(self, seed: int = 143) -> None:
+        self.random = Random(seed)
+        self.order_counter = 0
+        self.receipt_counter = 0
+
+    def receive_due_orders(
+        self,
+        world: WorldState,
+        scenario: DailyScenario,
+    ) -> list[SupplierReceipt]:
+        receipts: list[SupplierReceipt] = []
+
+        inventory_index = {
+            (item.store_id, item.sku_id): item
+            for item in world.inventory
+        }
+
+        for order in world.purchase_orders:
+            if order.status not in {"OPEN", "PARTIALLY_RECEIVED"}:
+                continue
+            if order.expected_delivery_day > scenario.simulation_day:
+                continue
+            if order.open_units <= 0:
+                order.status = "RECEIVED"
+                continue
+
+            received_now = order.open_units
+            if (
+                received_now >= 4
+                and order.status == "OPEN"
+                and self.random.random() < 0.18
+            ):
+                received_now = max(
+                    1,
+                    int(round(
+                        received_now
+                        * self.random.uniform(0.45, 0.75)
+                    )),
+                )
+
+            key = (order.store_id, order.sku_id)
+            if key not in inventory_index:
+                raise SupplierEngineV2Error(
+                    f"Missing inventory position for order {order.order_id}."
+                )
+
+            position = inventory_index[key]
+            position.on_hand += received_now
+            position.in_transit = max(
+                0,
+                position.in_transit - received_now,
+            )
+            position.last_updated_day = scenario.simulation_day
+
+            order.received_units += received_now
+            if order.open_units == 0:
+                order.status = "RECEIVED"
+            else:
+                order.status = "PARTIALLY_RECEIVED"
+                order.expected_delivery_day = (
+                    scenario.simulation_day + 1
+                )
+                order.expected_delivery_date = (
+                    date.fromisoformat(scenario.synthetic_date)
+                    + timedelta(days=1)
+                ).isoformat()
+
+            self.receipt_counter += 1
+            receipts.append(
+                SupplierReceipt(
+                    receipt_id=(
+                        f"REC-{scenario.simulation_day:04d}-"
+                        f"{self.receipt_counter:06d}"
+                    ),
+                    order_id=order.order_id,
+                    simulation_day=scenario.simulation_day,
+                    date=scenario.synthetic_date,
+                    store_id=order.store_id,
+                    sku_id=order.sku_id,
+                    supplier_id=order.supplier_id,
+                    received_units=received_now,
+                    procurement_cost=round(
+                        received_now * order.unit_cost,
+                        2,
+                    ),
+                    logistics_cost=round(
+                        received_now
+                        * order.logistics_cost_per_unit,
+                        2,
+                    ),
+                )
+            )
+
+        world.validate()
+        return receipts
+
+    def create_orders(
+        self,
+        world: WorldState,
+        scenario: DailyScenario,
+    ) -> list[PurchaseOrder]:
+        product_index = {
+            item.sku_id: item for item in world.products
+        }
+        supplier_index = {
+            item.supplier_id: item for item in world.suppliers
+        }
+        open_keys = {
+            (order.store_id, order.sku_id)
+            for order in world.purchase_orders
+            if order.status in {"OPEN", "PARTIALLY_RECEIVED"}
+            and order.open_units > 0
+        }
+
+        created: list[PurchaseOrder] = []
+
+        for position in world.inventory:
+            key = (position.store_id, position.sku_id)
+
+            if position.inventory_position > position.reorder_point:
+                continue
+            if key in open_keys:
+                continue
+
+            product = product_index[position.sku_id]
+            supplier = supplier_index[product.supplier_id]
+
+            ordered_units = max(
+                1,
+                position.target_stock - position.inventory_position,
+            )
+            effective_fill_rate = min(
+                1.0,
+                max(
+                    0.01,
+                    supplier.fill_rate
+                    * scenario.final_supply_multiplier,
+                ),
+            )
+            expected_units = max(
+                1,
+                min(
+                    ordered_units,
+                    int(round(ordered_units * effective_fill_rate)),
+                ),
+            )
+
+            delay = self.random.randint(
+                0,
+                supplier.lead_time_variability_days,
+            )
+            if self.random.random() > supplier.reliability_score:
+                delay += self.random.randint(
+                    1,
+                    max(
+                        2,
+                        supplier.lead_time_variability_days + 2,
+                    ),
+                )
+
+            # Supply conditions affect both the expected quantity and
+            # the delivery timing. A multiplier below 1.0 represents
+            # constrained capacity / disruption and therefore lengthens
+            # lead time; a multiplier above 1.0 represents expedited or
+            # resilient supply and may shorten it, never below one day.
+            supply_timing_factor = max(
+                0.25,
+                min(2.0, scenario.final_supply_multiplier),
+            )
+            adjusted_base_lead_time = max(
+                1,
+                int(round(
+                    supplier.base_lead_time_days / supply_timing_factor
+                )),
+            )
+            lead_time = max(
+                1,
+                adjusted_base_lead_time + delay,
+            )
+
+            self.order_counter += 1
+            order = PurchaseOrder(
+                order_id=(
+                    f"PO-{scenario.simulation_day:04d}-"
+                    f"{self.order_counter:06d}"
+                ),
+                store_id=position.store_id,
+                sku_id=position.sku_id,
+                supplier_id=supplier.supplier_id,
+                order_day=scenario.simulation_day,
+                order_date=scenario.synthetic_date,
+                ordered_units=ordered_units,
+                expected_units=expected_units,
+                received_units=0,
+                expected_delivery_day=(
+                    scenario.simulation_day + lead_time
+                ),
+                expected_delivery_date=(
+                    date.fromisoformat(scenario.synthetic_date)
+                    + timedelta(days=lead_time)
+                ).isoformat(),
+                status="OPEN",
+                unit_cost=product.unit_cost,
+                logistics_cost_per_unit=round(
+                    supplier.logistics_cost_per_unit
+                    * max(
+                        0.01,
+                        scenario.logistics_cost_multiplier,
+                    ),
+                    6,
+                ),
+            )
+            order.validate()
+
+            world.purchase_orders.append(order)
+            position.in_transit += expected_units
+            position.last_updated_day = scenario.simulation_day
+            position.validate()
+
+            created.append(order)
+            open_keys.add(key)
+
+        world.validate()
+        return created
+
+    def apply(
+        self,
+        world: WorldState,
+        scenario: DailyScenario,
+    ) -> dict[str, Any]:
+        receipts = self.receive_due_orders(world, scenario)
+        orders = self.create_orders(world, scenario)
+
+        return {
+            "receipts": receipts,
+            "orders_created": orders,
+        }
+
+===== sales_v2.py =====
+from __future__ import annotations
+
+from dataclasses import asdict, dataclass
+from random import Random
+from typing import Any
+import math
+
+from simulation.application.contracts import DailyScenario
+from simulation.domain.models import WorldState
+
+
+class SalesEngineV2Error(RuntimeError):
+    """Raised when sales generation violates domain invariants."""
+
+
+@dataclass(frozen=True)
+class SalesEvent:
+    sales_event_id: str
+    simulation_day: int
+    date: str
+    store_id: str
+    sku_id: str
+    requested_units: int
+    sold_units: int
+    lost_units: int
+    unit_price: float
+    unit_cost: float
+    realized_revenue: float
+    lost_revenue: float
+    cost_of_goods_sold: float
+    gross_margin: float
+    stock_before: int
+    stock_after: int
+    stockout_occurred: bool
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(frozen=True)
+class StockoutEvent:
+    stockout_event_id: str
+    simulation_day: int
+    date: str
+    store_id: str
+    sku_id: str
+    requested_units: int
+    available_units: int
+    lost_units: int
+    lost_revenue: float
+    penalty_cost: float
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+class SalesEngineV2:
+    def __init__(
+        self,
+        seed: int = 42,
+        demand_scale: float = 18.0,
+    ) -> None:
+        if demand_scale <= 0:
+            raise ValueError("demand_scale must be greater than zero.")
+        self.random = Random(seed)
+        self.demand_scale = float(demand_scale)
+
+    def _allocate_demand(
+        self,
+        world: WorldState,
+        scenario: DailyScenario,
+    ) -> list[int]:
+        target_units = max(
+            1,
+            int(
+                round(
+                    # expected_demand_units is already the calibrated
+                    # baseline multiplied by final_demand_multiplier in
+                    # the scenario generator. Applying that multiplier
+                    # again would square every demand shock.
+                    scenario.expected_demand_units
+                    * self.demand_scale
+                )
+            ),
+        )
+
+        product_index = {
+            item.sku_id: item for item in world.products
+        }
+
+        weights: list[float] = []
+        for position in world.inventory:
+            product = product_index[position.sku_id]
+            weight = self.random.lognormvariate(0.0, 0.80)
+
+            if product.category == scenario.category:
+                weight *= 2.2
+            if product.department == scenario.department:
+                weight *= 1.6
+            if position.store_id == scenario.store:
+                weight *= 2.5
+
+            weights.append(weight)
+
+        total_weight = sum(weights)
+        if total_weight <= 0:
+            raise SalesEngineV2Error(
+                "Demand allocation produced zero total weight."
+            )
+
+        raw_allocations = [
+            target_units * weight / total_weight
+            for weight in weights
+        ]
+        allocations = [
+            int(math.floor(value))
+            for value in raw_allocations
+        ]
+
+        remainder = target_units - sum(allocations)
+        ranked = sorted(
+            range(len(raw_allocations)),
+            key=lambda idx: (
+                raw_allocations[idx] - allocations[idx]
+            ),
+            reverse=True,
+        )
+
+        for idx in ranked[:remainder]:
+            allocations[idx] += 1
+
+        return allocations
+
+    def apply(
+        self,
+        world: WorldState,
+        scenario: DailyScenario,
+    ) -> dict[str, Any]:
+        world.validate()
+
+        product_index = {
+            item.sku_id: item for item in world.products
+        }
+        allocations = self._allocate_demand(world, scenario)
+
+        sales_events: list[SalesEvent] = []
+        stockout_events: list[StockoutEvent] = []
+
+        requested_total = 0
+        sold_total = 0
+        lost_total = 0
+        realized_revenue = 0.0
+        lost_revenue = 0.0
+        cost_of_goods_sold = 0.0
+        gross_margin = 0.0
+
+        event_counter = 0
+        stockout_counter = 0
+
+        for position, requested in zip(world.inventory, allocations):
+            if requested <= 0:
+                continue
+
+            product = product_index[position.sku_id]
+            before = position.on_hand
+            available = position.available
+            sold = min(requested, available)
+            lost = requested - sold
+
+            position.on_hand -= sold
+            position.last_updated_day = scenario.simulation_day
+            position.validate()
+
+            revenue = round(sold * product.unit_price, 2)
+            lost_rev = round(lost * product.unit_price, 2)
+            cogs = round(sold * product.unit_cost, 2)
+            margin = round(revenue - cogs, 2)
+
+            event_counter += 1
+            sales_events.append(
+                SalesEvent(
+                    sales_event_id=(
+                        f"SALE-{scenario.simulation_day:04d}-"
+                        f"{event_counter:06d}"
+                    ),
+                    simulation_day=scenario.simulation_day,
+                    date=scenario.synthetic_date,
+                    store_id=position.store_id,
+                    sku_id=position.sku_id,
+                    requested_units=requested,
+                    sold_units=sold,
+                    lost_units=lost,
+                    unit_price=product.unit_price,
+                    unit_cost=product.unit_cost,
+                    realized_revenue=revenue,
+                    lost_revenue=lost_rev,
+                    cost_of_goods_sold=cogs,
+                    gross_margin=margin,
+                    stock_before=before,
+                    stock_after=position.on_hand,
+                    stockout_occurred=lost > 0,
+                )
+            )
+
+            if lost > 0:
+                stockout_counter += 1
+                stockout_events.append(
+                    StockoutEvent(
+                        stockout_event_id=(
+                            f"STO-{scenario.simulation_day:04d}-"
+                            f"{stockout_counter:06d}"
+                        ),
+                        simulation_day=scenario.simulation_day,
+                        date=scenario.synthetic_date,
+                        store_id=position.store_id,
+                        sku_id=position.sku_id,
+                        requested_units=requested,
+                        available_units=available,
+                        lost_units=lost,
+                        lost_revenue=lost_rev,
+                        penalty_cost=round(
+                            lost
+                            * product.stockout_penalty_per_unit,
+                            2,
+                        ),
+                    )
+                )
+
+            requested_total += requested
+            sold_total += sold
+            lost_total += lost
+            realized_revenue += revenue
+            lost_revenue += lost_rev
+            cost_of_goods_sold += cogs
+            gross_margin += margin
+
+        world.validate()
+
+        fill_rate = (
+            sold_total / requested_total
+            if requested_total > 0
+            else 1.0
+        )
+
+        return {
+            "requested_units": requested_total,
+            "sold_units": sold_total,
+            "lost_units": lost_total,
+            "fill_rate": round(fill_rate, 6),
+            "realized_revenue": round(realized_revenue, 2),
+            "lost_revenue": round(lost_revenue, 2),
+            "cost_of_goods_sold": round(
+                cost_of_goods_sold,
+                2,
+            ),
+            "gross_margin": round(gross_margin, 2),
+            "sales_events": sales_events,
+            "stockout_events": stockout_events,
+        }
+
+===== economic_sanity_v2.py =====
+from __future__ import annotations
+
+from dataclasses import asdict, dataclass
+from typing import Any
+
+
+class EconomicSanityError(RuntimeError):
+    """Raised when financial assumptions or outputs are implausible."""
+
+
+@dataclass(frozen=True)
+class EconomicAssumptions:
+    fixed_operating_cost_share_of_revenue: float = 0.18
+    variable_operating_cost_per_unit: float = 0.35
+    target_holding_cost_share_of_inventory: float = 0.03
+    minimum_gross_margin_rate: float = 0.10
+    maximum_operating_cost_share_of_revenue: float = 0.45
+    maximum_holding_cost_share_of_inventory: float = 0.08
+    maximum_logistics_share_of_procurement: float = 0.15
+
+    def validate(self) -> None:
+        values = asdict(self)
+        for name, value in values.items():
+            if value < 0:
+                raise EconomicSanityError(
+                    f"{name} must be non-negative."
+                )
+        if self.fixed_operating_cost_share_of_revenue > 1:
+            raise EconomicSanityError(
+                "Fixed operating cost share cannot exceed 100%."
+            )
+        if self.maximum_operating_cost_share_of_revenue > 1:
+            raise EconomicSanityError(
+                "Maximum operating cost share cannot exceed 100%."
+            )
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(frozen=True)
+class EconomicSanityReport:
+    realized_revenue: float
+    gross_margin: float
+    recalibrated_operating_cost: float
+    recalibrated_holding_cost: float
+    logistics_cost: float
+    procurement_cost: float
+    stockout_penalty_cost: float
+    calibrated_net_operating_profit: float
+    gross_margin_rate: float
+    operating_cost_share_of_revenue: float
+    holding_cost_share_of_inventory: float
+    logistics_share_of_procurement: float
+    inventory_turnover: float
+    gmroi: float
+    status: str
+    violations: list[str]
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+class EconomicSanityEngineV2:
+    def __init__(
+        self,
+        assumptions: EconomicAssumptions | None = None,
+    ) -> None:
+        self.assumptions = assumptions or EconomicAssumptions()
+        self.assumptions.validate()
+
+    def evaluate(
+        self,
+        financial_kpis: dict[str, float],
+        sold_units: int,
+    ) -> EconomicSanityReport:
+        revenue = float(financial_kpis["realized_revenue"])
+        cogs = float(financial_kpis["cost_of_goods_sold"])
+        gross_margin = revenue - cogs
+        inventory_value = max(
+            0.0,
+            float(financial_kpis["average_inventory_value"]),
+        )
+        logistics_cost = max(
+            0.0,
+            float(financial_kpis["logistics_cost"]),
+        )
+        procurement_cost = max(
+            0.0,
+            float(financial_kpis["procurement_cost"]),
+        )
+        stockout_cost = max(
+            0.0,
+            float(financial_kpis["stockout_penalty_cost"]),
+        )
+
+        fixed_operating_cost = (
+            revenue
+            * self.assumptions.fixed_operating_cost_share_of_revenue
+        )
+        variable_operating_cost = (
+            max(0, int(sold_units))
+            * self.assumptions.variable_operating_cost_per_unit
+        )
+        recalibrated_operating_cost = (
+            fixed_operating_cost + variable_operating_cost
+        )
+
+        recalibrated_holding_cost = (
+            inventory_value
+            * self.assumptions.target_holding_cost_share_of_inventory
+        )
+
+        calibrated_profit = (
+            gross_margin
+            - recalibrated_operating_cost
+            - recalibrated_holding_cost
+            - logistics_cost
+            - stockout_cost
+        )
+
+        gross_margin_rate = (
+            gross_margin / revenue if revenue > 0 else 0.0
+        )
+        operating_share = (
+            recalibrated_operating_cost / revenue
+            if revenue > 0 else 0.0
+        )
+        holding_share = (
+            recalibrated_holding_cost / inventory_value
+            if inventory_value > 0 else 0.0
+        )
+        logistics_share = (
+            logistics_cost / procurement_cost
+            if procurement_cost > 0 else 0.0
+        )
+        inventory_turnover = (
+            cogs / inventory_value if inventory_value > 0 else 0.0
+        )
+        gmroi = (
+            gross_margin / inventory_value
+            if inventory_value > 0 else 0.0
+        )
+
+        violations: list[str] = []
+
+        if gross_margin_rate < self.assumptions.minimum_gross_margin_rate:
+            violations.append("gross_margin_rate_below_minimum")
+        if (
+            operating_share
+            > self.assumptions.maximum_operating_cost_share_of_revenue
+        ):
+            violations.append(
+                "operating_cost_share_above_maximum"
+            )
+        if (
+            holding_share
+            > self.assumptions.maximum_holding_cost_share_of_inventory
+        ):
+            violations.append(
+                "holding_cost_share_above_maximum"
+            )
+        if (
+            logistics_share
+            > self.assumptions.maximum_logistics_share_of_procurement
+        ):
+            violations.append(
+                "logistics_share_above_maximum"
+            )
+
+        return EconomicSanityReport(
+            realized_revenue=round(revenue, 2),
+            gross_margin=round(gross_margin, 2),
+            recalibrated_operating_cost=round(
+                recalibrated_operating_cost,
+                2,
+            ),
+            recalibrated_holding_cost=round(
+                recalibrated_holding_cost,
+                2,
+            ),
+            logistics_cost=round(logistics_cost, 2),
+            procurement_cost=round(procurement_cost, 2),
+            stockout_penalty_cost=round(stockout_cost, 2),
+            calibrated_net_operating_profit=round(
+                calibrated_profit,
+                2,
+            ),
+            gross_margin_rate=round(gross_margin_rate, 6),
+            operating_cost_share_of_revenue=round(
+                operating_share,
+                6,
+            ),
+            holding_cost_share_of_inventory=round(
+                holding_share,
+                6,
+            ),
+            logistics_share_of_procurement=round(
+                logistics_share,
+                6,
+            ),
+            inventory_turnover=round(
+                inventory_turnover,
+                6,
+            ),
+            gmroi=round(gmroi, 6),
+            status="PASSED" if not violations else "FAILED",
+            violations=violations,
+        )
+
+===== policy_comparison_runner_v2.py =====
+from __future__ import annotations
+
+from copy import deepcopy
+from pathlib import Path
+from typing import Any
+import json
+
+import pandas as pd
+
+from simulation.application.orchestrator_v2 import (
+    SimulationOrchestratorV2,
+)
+from simulation.decision.policies_v2 import (
+    InventoryPolicyApplier,
+    POLICIES,
+)
+from simulation.infrastructure.world_repository import (
+    JsonWorldRepository,
+)
+
+
+class PolicyComparisonError(RuntimeError):
+    """Raised when policy benchmarking cannot be completed."""
+
+
+class PolicyComparisonRunnerV2:
+    def __init__(
+        self,
+        base_world_path: str | Path,
+        scenario_path: str | Path,
+        output_dir: str | Path,
+        seed: int = 42,
+    ) -> None:
+        self.base_world_path = Path(base_world_path)
+        self.scenario_path = Path(scenario_path)
+        self.output_dir = Path(output_dir)
+        self.seed = seed
+
+    @staticmethod
+    def _score(
+        profit: float,
+        fill_rate: float,
+        minimum_service_level: float,
+    ) -> float:
+        service_penalty = 0.0
+        if fill_rate < minimum_service_level:
+            service_penalty = (
+                minimum_service_level - fill_rate
+            ) * 1_000_000.0
+        return profit - service_penalty
+
+    def run(self, days: int = 365) -> dict[str, Any]:
+        if not self.base_world_path.is_file():
+            raise PolicyComparisonError(
+                f"Base world not found: {self.base_world_path}"
+            )
+        if not self.scenario_path.is_file():
+            raise PolicyComparisonError(
+                f"Scenario file not found: {self.scenario_path}"
+            )
+
+        repository = JsonWorldRepository()
+        base_world = repository.load(self.base_world_path)
+        applier = InventoryPolicyApplier()
+
+        self.output_dir.mkdir(parents=True, exist_ok=True)
+
+        comparison_rows: list[dict[str, Any]] = []
+        all_actions: list[dict[str, Any]] = []
+
+        for policy_name, policy in POLICIES.items():
+            policy_dir = self.output_dir / policy_name
+            policy_dir.mkdir(parents=True, exist_ok=True)
+
+            world = deepcopy(base_world)
+            actions = applier.apply(world, policy)
+            all_actions.extend(action.to_dict() for action in actions)
+
+            policy_world_path = (
+                policy_dir / "world_state_policy_day_000.json"
+            )
+            repository.save(world, policy_world_path)
+
+            result = SimulationOrchestratorV2(
+                world_path=policy_world_path,
+                scenario_path=self.scenario_path,
+                output_dir=policy_dir,
+                seed=self.seed,
+            ).run(days=days)
+
+            score = self._score(
+                profit=float(
+                    result["calibrated_net_operating_profit"]
+                ),
+                fill_rate=float(result["overall_fill_rate"]),
+                minimum_service_level=policy.minimum_service_level,
+            )
+
+            comparison_rows.append(
+                {
+                    "policy_name": policy_name,
+                    "description": policy.description,
+                    "reorder_multiplier": policy.reorder_multiplier,
+                    "target_multiplier": policy.target_multiplier,
+                    "minimum_service_level": (
+                        policy.minimum_service_level
+                    ),
+                    "requested_units": result["requested_units"],
+                    "sold_units": result["sold_units"],
+                    "lost_units": result["lost_units"],
+                    "fill_rate": result["overall_fill_rate"],
+                    "ending_on_hand_units": (
+                        result["ending_on_hand_units"]
+                    ),
+                    "ending_in_transit_units": (
+                        result["ending_in_transit_units"]
+                    ),
+                    "orders_created": result["orders_created"],
+                    "receipts_created": result["receipts_created"],
+                    "realized_revenue": result["realized_revenue"],
+                    "gross_margin": result["gross_margin"],
+                    "holding_cost": result["holding_cost"],
+                    "logistics_cost": result["logistics_cost"],
+                    "calibrated_net_operating_profit": (
+                        result[
+                            "calibrated_net_operating_profit"
+                        ]
+                    ),
+                    "economic_sanity_status": (
+                        result["economic_sanity_status"]
+                    ),
+                    "service_constraint_met": (
+                        result["overall_fill_rate"]
+                        >= policy.minimum_service_level
+                    ),
+                    "objective_score": round(score, 2),
+                }
+            )
+
+        comparison = pd.DataFrame(comparison_rows).sort_values(
+            ["objective_score", "fill_rate"],
+            ascending=[False, False],
+        ).reset_index(drop=True)
+
+        comparison["rank"] = range(1, len(comparison) + 1)
+        winner = comparison.iloc[0].to_dict()
+
+        comparison_path = (
+            self.output_dir / "policy_comparison_v2.csv"
+        )
+        action_path = self.output_dir / "policy_actions_v2.csv"
+        comparison.to_csv(comparison_path, index=False)
+        pd.DataFrame(all_actions).to_csv(action_path, index=False)
+
+        result = {
+            "status": "PASSED",
+            "schema_version": "2.0.0",
+            "days_compared": days,
+            "seed": self.seed,
+            "policies_compared": list(POLICIES),
+            "winner": winner,
+            "ranking": comparison.to_dict(orient="records"),
+            "fair_comparison": {
+                "same_initial_world": True,
+                "same_scenarios": True,
+                "same_seed": True,
+                "future_information_used": False,
+            },
+            "comparison_path": str(comparison_path.resolve()),
+            "actions_path": str(action_path.resolve()),
+        }
+
+        summary_path = (
+            self.output_dir / "policy_comparison_summary_v2.json"
+        )
+        summary_path.write_text(
+            json.dumps(result, indent=2, ensure_ascii=False),
+            encoding="utf-8",
+        )
+
+        return result
