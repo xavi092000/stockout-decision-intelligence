@@ -36,6 +36,21 @@ The platform combines software engineering and machine learning into a modular a
 
 ---
 
+## Recruiter Snapshot
+
+| Production Capability | Evidence |
+|---|---|
+| Deterministic simulation | Reproducible 365-day retail episodes |
+| Leakage-safe machine learning | Decision-time features with episode isolation |
+| Closed-loop evaluation | Policies executed inside the persistent simulator |
+| Statistical validation | 30 unseen seeds and 95% confidence intervals |
+| Policy governance | Registry, candidate tracking, and champion resolution |
+| Explainable decisions | Operational recommendations and alternatives |
+| Quality engineering | 103 automated tests, Docker, and CI |
+
+> **Business result:** the learned policy produced a mean Net Business Value improvement of **+$206,585.95**, while increasing service level by **2.11 percentage points** across 30 unseen simulation seeds.
+
+---
 ## Engineering Metrics
 
 | Metric | Value |
@@ -82,14 +97,17 @@ Rather than maximizing a benchmark score, the objective is to demonstrate produc
 ## High-Level Architecture
 
 ```mermaid
-flowchart LR
+flowchart TD
     A[Reality Calibration] --> B[Scenario Generation]
     B --> C[Persistent Retail Simulation]
+
     C --> D[Leakage-Safe Dataset Builder]
     C --> E[Economic Evaluation Engine]
+
     D --> F[Policy Learning]
-    E --> G[Closed-Loop Benchmark]
-    F --> G
+    F --> G[Closed-Loop Benchmark]
+    E --> G
+
     G --> H[Policy Governance]
     H --> I[Decision Intelligence]
     I --> J[Operational Recommendation]
@@ -171,16 +189,20 @@ This transforms the problem from supervised prediction into operational Decision
 ## Platform Architecture
 
 ```mermaid
-flowchart LR
+flowchart TD
     HIST[Historical Data] --> CAL[Reality Calibration]
     CONFIG[Business Configuration] --> SCEN[Scenario Generator]
     CAL --> SCEN
+
     SCEN --> WORLD[Persistent Retail World]
-    WORLD --> ECON[Economic Engine]
+
     WORLD --> DATA[Leakage-Safe Dataset Builder]
+    WORLD --> ECON[Economic Engine]
+
     DATA --> MODEL[Policy Learning]
     MODEL --> BENCH[Closed-Loop Benchmark]
     ECON --> BENCH
+
     BENCH --> VALID[Statistical Validation]
     VALID --> GOV[Policy Governance]
     GOV --> DI[Decision Intelligence]
@@ -352,14 +374,16 @@ The benchmark intentionally exposes the trade-off between stronger business outc
 Machine learning models are treated as operational assets rather than standalone artifacts.
 
 ```mermaid
-flowchart LR
+flowchart TD
     A[Train Candidate] --> B[Validate]
     B --> C[Benchmark]
     C --> D[Policy Registry]
     D --> E[Champion Resolution]
     E --> F[Deploy]
     F --> G[Monitor]
-    G --> H[Replace or Retain]
+    G --> H{Policy Still Acceptable?}
+    H -->|Yes| I[Retain Champion]
+    H -->|No| J[Replace Champion]
 ```
 
 Governance responsibilities include:
