@@ -93,7 +93,7 @@ graph LR
     G --> H[Policy Governance]
     H --> I[Decision Intelligence]
     I --> J[Operational Recommendation]
-`$([Environment]::NewLine)
+
 ## Platform Layers
 
 | Layer | Responsibility |
