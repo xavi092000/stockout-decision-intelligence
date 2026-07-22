@@ -1,4 +1,4 @@
-﻿# Stockout Decision Intelligence Platform
+# Stockout Decision Intelligence Platform
 
 [![CI](https://github.com/xavi092000/stockout-decision-intelligence/actions/workflows/ci.yml/badge.svg?branch=feature%2Fsupply-chain-simulator)](https://github.com/xavi092000/stockout-decision-intelligence/actions/workflows/ci.yml)
 
@@ -518,27 +518,39 @@ Operational deployment requires versioning, benchmark evidence, traceability, an
 
 ## Repository Structure
 
-The repository is organized as a modular engineering platform where each component owns a single responsibility.
+The repository is organized around the actual engineering responsibilities of the platform:
 
 ```text
 .
-|-- calibration/              # Reality calibration from historical observations
-|-- simulation/               # Deterministic scenario generation and retail simulation
-|-- datasets/                 # Leakage-safe snapshot extraction
-|-- training/                 # Policy training workflows
-|-- benchmark/                # Closed-loop policy evaluation
-|-- governance/               # Policy registry and champion lifecycle
-|-- decision_intelligence/    # Business recommendations and explainability
-|-- validation/               # Dataset audits and statistical validation
-|-- tests/                    # Automated regression and integration tests
-|-- api/                      # FastAPI endpoints
+|-- .github/
+|   `-- workflows/                  # Automated tests and Docker validation
+|-- artifacts/
+|   |-- policy_training/            # Trained model, metadata, and benchmark evidence
+|   |-- statistical_validation/     # Statistical validation reports
+|   `-- synthetic_generation/       # Synthetic scenario validation evidence
+|-- docs/
+|   `-- audits/                     # Causal, ML-design, and sequential-decision audits
+|-- simulation/
+|   |-- application/                # Application orchestration and adaptive runners
+|   |-- decision/                   # Operational policies and decision adapters
+|   |-- decision_intelligence/      # Risk, confidence, explanation, and reporting
+|   |-- domain/                     # Core business entities and factories
+|   |-- engines/                    # Inventory, supplier, sales, and financial engines
+|   |-- governance/                 # Policy registry and lifecycle management
+|   |-- infrastructure/             # Persistence and repository abstractions
+|   |-- ml/                         # Dataset construction and policy-learning components
+|   |-- scripts/                    # Executable simulation and benchmark workflows
+|   |-- tests/                      # Simulation-specific automated tests
+|   |-- validation/                 # Scientific and economic validation protocols
+|   `-- world/                      # Persistent supply-chain world state
+|-- tests/                          # Cross-cutting regression and validation tests
+|-- Dockerfile                     # Reproducible container environment
+|-- requirements.txt               # Python dependencies
+|-- pytest.ini                     # Test configuration
 `-- README.md
 ```
 
-Although directory names may evolve, architectural responsibilities remain intentionally decoupled.
-
----
-
+The architecture is organized by engineering responsibility rather than by deployment unit. This keeps simulation, policy learning, benchmarking, governance, validation, and Decision Intelligence independently testable and replaceable.
 ## Technology Stack
 
 | Capability | Technology |
