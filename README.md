@@ -23,6 +23,103 @@ The platform combines software engineering and machine learning into a modular a
 
 ---
 
+## Proof of Decision Intelligence
+
+**V25 is a learned action-value policy that selects both inventory action and quantity as a function of system state. On 10 unseen 365-day simulation seeds, it outperformed the deterministic EconomicConstrainedPolicy on 10/10 seeds, with an average annual business-value improvement of $29.8K and no service-level degradation.**
+
+*These results demonstrate decision intelligence and economic superiority within the simulation environment and tested held-out scenarios. They do not constitute proof of real-world production performance.*
+
+1. **What does the model decide?** At every store/SKU decision point it chooses one of `DO_NOTHING`, `ORDER_NORMAL`, `ORDER_EXPEDITE`, `TRANSFER_STOCK` — **and the quantity** of that action.
+2. **Why is this decision intelligent?** The choice is state-dependent: the same action type receives different quantities in different states (average ordered quantity varied 56–91 units across scenarios for normal orders). It is a learned action-value selection, not a fixed rule.
+3. **What baseline is it compared against?** A deterministic `EconomicConstrainedPolicy` (14-day target cover, 3-day expedite trigger) on identical simulated scenarios, paired seed by seed.
+4. **Was the evaluation held-out?** Yes. Training seeds (2000–2003), validation seeds (4000–4001), and final test seeds (14000–14009) are disjoint. Test seeds were never used for training, tuning, or model selection.
+5. **Did it create more economic value?** Yes — mean annual business-value delta of **+$29,824.74** per seed (95% CI [+$21.8K, +$37.9K]), 10/10 wins, aggregate +$298,247.35.
+6. **Did service degrade?** No — service-level delta +0.0000, stockouts and unmet units unchanged on every seed.
+7. **Is the result reproducible?** Yes — see [Reproduce the Results](#reproduce-the-results).
+
+### Results
+
+| Evaluation | Mean Delta vs Baseline | Wins | CI95 | Service Delta |
+|---|---:|---:|---:|---:|
+| 60 days × 10 held-out seeds | +$8,894.00 | 10/10 | +$6.5K to +$11.3K | 0.0000 |
+| 365 days × 10 held-out seeds | +$29,824.74 | 10/10 | +$21.8K to +$37.9K | 0.0000 |
+
+365-day detail: worst seed +$9,803.65 · best seed +$41,665.45 · aggregate gain +$298,247.35.
+
+![365-day per-seed deltas](docs/assets/v25_365d_seed_deltas.png)
+![Mean delta with 95% CI](docs/assets/v25_mean_delta_ci.png)
+
+### How the Decision Loop Works
+
+```
+STATE (stock, pending orders, forecast, lead time, safety stock, weather)
+  → generate feasible action+quantity candidates
+  → model scores expected economic value of each candidate
+  → argmax selects the decision
+  → simulator executes the decision
+  → economics measured (business value, service, costs)
+```
+
+Candidates include all four action types with multiple quantities per type (25/50/75/100% of the coverage gap for supplier orders, 50/100% of feasible surplus for transfers). The policy is a **state-dependent, learned action-value selection** — it does not follow hand-written decision rules, and no post-hoc guard or heuristic filter is applied to its output.
+
+### Adaptive Decision Behavior
+
+Across the 10×60-day evaluation (60,000 decisions), the policy did not repeat a fixed action:
+
+| Action | Count | Share |
+|---|---:|---:|
+| DO_NOTHING | 39,923 | 66.5% |
+| ORDER_NORMAL | 19,323 | 32.2% |
+| ORDER_EXPEDITE | 754 | 1.2% |
+| TRANSFER_STOCK | 0 | 0.0% |
+
+The policy adapts its chosen action and quantity to the observed state. It learned to use expedited orders sparingly (~1.2% of decisions), while normal-order quantities varied across scenarios (average 56–91 units per seed). `TRANSFER_STOCK` was never selected in these specific scenarios; this is an observed outcome of the learned value estimates in this environment, not a rule, and is not claimed to be universally optimal.
+
+![Decision distribution](docs/assets/v25_decision_distribution.png)
+
+### What Failed Before V25
+
+V24, an earlier version with the **same model architecture, same 14 features, and same action space**, failed economically (−$23.6K mean delta vs baseline on 3 held-out seeds) because its training dataset was not representative of closed-loop operation:
+
+- 0% HEALTHY states in training (vs ~58% of closed-loop decisions)
+- maximum training coverage 9.12 days (vs ~14.5 median in closed loop)
+- zero states with pending orders
+- **>97% of closed-loop decisions fell outside the training support**
+
+V25 fixed the **data collector** — periodic state capture across full episode trajectories covering all four operational strata, pending orders (54.1% of states), and stationary regimes (coverage >14 days in 46.7% of states) — instead of adding any hard-coded post-processing rule.
+
+**The improvement came from fixing state coverage, not from adding hard-coded post-processing rules.**
+
+![Dataset coverage V24 vs V25](docs/assets/v25_dataset_coverage.png)
+
+Full evidence file: [docs/V25_DECISION_INTELLIGENCE_EVIDENCE.md](docs/V25_DECISION_INTELLIGENCE_EVIDENCE.md)
+
+### Reproduce the Results
+
+```powershell
+# 1. Run the test suite
+& .venv\Scripts\python.exe -m pytest simulation/tests -q
+
+# 2. Generate the V25 counterfactual dataset (~16 min)
+& .venv\Scripts\python.exe -m simulation.learning.counterfactual_dataset_v25 --period 2 --cap-per-stratum 4
+
+# 3. Train the V25 action-value model
+& .venv\Scripts\python.exe -m simulation.learning.train_action_value_v25
+
+# 4. Run the 10-seed x 60-day economic benchmark (~8 min, 4 workers)
+& .venv\Scripts\python.exe run_v25_60d.py
+
+# 5. Run the 10-seed x 365-day economic benchmark (~48 min, 4 workers)
+& .venv\Scripts\python.exe run_v25_365d.py
+
+# 6. Regenerate the proof charts
+& .venv\Scripts\python.exe scripts\generate_v25_proof_charts.py
+```
+
+All benchmark scripts save per-seed results immediately under `artifacts/model_based_v25/` and skip seeds that already have valid results, so they can be safely re-run.
+
+---
+
 ## Highlights
 
 - Deterministic retail simulation
