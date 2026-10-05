@@ -32,7 +32,7 @@ The platform combines software engineering and machine learning into a modular a
 1. **What does the model decide?** At every store/SKU decision point it chooses one of `DO_NOTHING`, `ORDER_NORMAL`, `ORDER_EXPEDITE`, `TRANSFER_STOCK` — **and the quantity** of that action.
 2. **Why is this decision intelligent?** The choice is state-dependent: the same action type receives different quantities in different states (average ordered quantity varied 56–91 units across scenarios for normal orders). It is a learned action-value selection, not a fixed rule.
 3. **What baseline is it compared against?** A deterministic `EconomicConstrainedPolicy` (14-day target cover, 3-day expedite trigger) on identical simulated scenarios, paired seed by seed.
-4. **Was the evaluation held-out?** Yes. Training seeds (2000–2003), validation seeds (4000–4001), and final test seeds (14000–14009) are disjoint. Test seeds were never used for training, tuning, or model selection.
+4. **Was the evaluation held-out?** Yes. Training seeds (2000–2003), validation seeds (4000–4001), and final test seeds (14000–14009) are disjoint. Final test seeds were not used for training or tuning, and the V25 model was frozen before final evaluation.
 5. **Did it create more economic value?** Yes — mean annual business-value delta of **+$29,824.74** per seed (95% CI [+$21.8K, +$37.9K]), 10/10 wins, aggregate +$298,247.35.
 6. **Did service degrade?** No — service-level delta +0.0000, stockouts and unmet units unchanged on every seed.
 7. **Is the result reproducible?** Yes — see [Reproduce the Results](#reproduce-the-results).
@@ -417,17 +417,9 @@ Complete episode isolation is maintained across training, validation, and testin
 
 Operational policies are learned from decision-time snapshots.
 
-The learning layer intentionally remains model-independent.
+The current V25 implementation uses a supervised Random Forest action-value model. At each decision point, it evaluates feasible action-and-quantity candidates using decision-time features and selects the candidate with the highest predicted economic value.
 
-The current implementation uses a supervised baseline, while the architecture allows future replacement by:
-
-- gradient boosting
-- random forests
-- reinforcement learning
-- contextual bandits
-- optimization-based policies
-
-without modifying downstream benchmarking, governance, or Decision Intelligence layers.
+The learning layer remains model-independent, allowing future replacement or comparison with gradient boosting, reinforcement learning, contextual bandits, or optimization-based policies without changing the downstream benchmarking, governance, or Decision Intelligence layers.
 
 ### 7. Closed-Loop Benchmark Engine
 
@@ -512,7 +504,7 @@ Governance responsibilities include:
 
 ## Decision Intelligence
 
-Machine learning predicts actions. Decision Intelligence produces operational recommendations.
+The learned policy scores feasible action-and-quantity candidates by predicted economic value and selects the highest-value decision. Decision Intelligence produces operational recommendations.
 
 The platform converts predictions into structured business guidance suitable for planners, analysts, or downstream systems.
 
