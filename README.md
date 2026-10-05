@@ -129,7 +129,7 @@ All benchmark scripts save per-seed results immediately under `artifacts/model_b
 - Statistical validation
 - Policy governance
 - Explainable Decision Intelligence
-- 103 automated tests
+- 130 automated tests
 
 ---
 
@@ -139,17 +139,20 @@ All benchmark scripts save per-seed results immediately under `artifacts/model_b
 |---|---|
 | Deterministic simulation | Reproducible 365-day retail episodes |
 | Leakage-safe machine learning | Decision-time features with episode isolation |
-| Closed-loop evaluation | Policies executed inside the persistent simulator |
-| Statistical validation | 30 unseen seeds and 95% confidence intervals |
+| Closed-loop evaluation | Policies executed inside the persistent simulator; 10 held-out 365-day seeds, paired against a deterministic baseline |
+| Statistical validation | V25 mean delta +$29.8K, CI95 entirely positive |
 | Policy governance | Registry, candidate tracking, and champion resolution |
 | Explainable decisions | Operational recommendations and alternatives |
-| Quality engineering | 103 automated tests, Docker, and CI |
+| Decision intelligence | State-dependent action + quantity selection |
+| Quality engineering | 130 automated tests, Docker, and CI |
 
-> **Business result:** the learned policy produced a mean Net Business Value improvement of **+$206,585.95**, while increasing service level by **2.11 percentage points** across 30 unseen simulation seeds.
+> **Business result:** V25 produced a mean annual business-value improvement of **+$29,824.74** across 10 held-out 365-day seeds, winning **10/10** comparisons with no service-level degradation.
 
 ---
 
 ## Business Impact
+
+Across 10 held-out 365-day simulation seeds, V25 produced a mean annual business-value improvement of **+$29,824.74** over the deterministic baseline, winning **10/10** paired comparisons with **no service-level degradation**. Aggregate business value increased by **+$298,247.35**, while stockouts and unmet demand were unchanged.
 
 ![Business Impact of the ML Decision Policy](docs/assets/policy_performance_comparison.png)
 
@@ -161,9 +164,9 @@ All benchmark scripts save per-seed results immediately under `artifacts/model_b
 | Metric | Value |
 |---|---:|
 | Simulation Horizon | 365 days |
-| Benchmark Seeds | 30 unseen episodes |
+| Benchmark Seeds | 10 held-out seeds (60-day & 365-day) |
 | Supported Actions | 4 |
-| Automated Tests | 103 |
+| Automated Tests | 130 |
 | Policy Evaluation | Closed-loop |
 | Dataset Construction | Leakage-safe |
 | Benchmark Validation | 95% confidence intervals |
@@ -236,17 +239,18 @@ flowchart TD
 
 ## Benchmark Highlights
 
-The current benchmark evaluates policies across **30 unseen simulation seeds**, ensuring that every candidate policy experiences identical operating conditions.
+The current benchmark evaluates **V25** against the deterministic `EconomicConstrainedPolicy` across 10 held-out 365-day simulation seeds (14000–14009), paired seed by seed.
 
-| Metric | Improvement |
+| Metric | Result |
 |---|---:|
-| Mean Net Business Value | **+$206,585.95** |
-| Mean Service Level | **+2.11 percentage points** |
-| Value Win Rate | **83.33%** |
-| Service-Level Win Rate | **93.33%** |
-| Joint Win Rate | **83.33%** |
+| Mean Business Value Delta | **+$29,824.74** |
+| 95% CI | **+$21,773.55 to +$37,875.92** |
+| Wins | **10/10** |
+| Service Delta | **0.0000** |
+| Stockout Delta | **0** |
+| Unmet Demand Delta | **0** |
 
-The learned policy improves service level and business value while accepting a measured increase in operating cost.
+V25 improved business value on every evaluated seed while preserving service level; over the same episodes it produced no change in stockouts or unmet demand.
 
 ---
 
@@ -263,7 +267,7 @@ The learned policy improves service level and business value while accepting a m
 | Statistical validation | Complete |
 | Policy registry and champion resolution | Complete |
 | Decision Intelligence outputs | Complete |
-| Automated testing | 103 tests passing |
+| Automated testing | 130 tests passing |
 
 ---
 
@@ -445,32 +449,35 @@ Reported metrics include Net Business Value, service level, stockout events, unm
 
 ## Benchmark Results
 
-Benchmarking is performed by replaying every candidate policy across **30 previously unseen simulation seeds**.
+Benchmarking is performed by replaying every candidate policy across the same held-out simulation episodes, ensuring that observed performance differences are attributable to decision quality rather than environmental variation.
 
-Each policy experiences identical operating conditions, ensuring that observed performance differences are attributable to decision quality rather than environmental variation.
+### Final Benchmark — V25
 
-### Benchmark Summary
+V25 was evaluated on 10 held-out simulation seeds (14000–14009) over both a 60-day and a 365-day horizon, paired seed by seed against the deterministic `EconomicConstrainedPolicy` baseline.
 
-| Metric | Rule-Based | ML Policy |
-|---|---:|---:|
-| Service Level | 73.60% | **75.71%** |
-| Net Business Value | $3,608,227 | **$3,814,813** |
-| Total Cost | $7,323,873 | $7,429,025 |
-| Stockout Events | 11,634 | **10,396** |
-| Unmet Demand | 194,004 | **178,535** |
+| Evaluation | Mean Business Value Delta | Wins | 95% CI | Service Delta |
+|---|---:|---:|---:|---:|
+| 60 days × 10 held-out seeds | +$8,894.00 | 10/10 | +$6,526 to +$11,262 | 0.0000 |
+| 365 days × 10 held-out seeds | +$29,824.74 | 10/10 | +$21,773.55 to +$37,875.92 | 0.0000 |
 
-### Measured Policy Improvements
+365-day detail: worst seed +$9,803.65 · best seed +$41,665.45 · aggregate gain +$298,247.35.
 
-| Improvement | Result |
+Across the 365-day evaluation, V25 won 10/10 seed comparisons with a service-level delta of 0.0000, a stockout delta of 0, and an unmet-demand delta of 0.
+
+---
+
+## Historical Benchmark — Earlier Policy Version
+
+Earlier development-stage experiments evaluated a different policy configuration across 30 unseen simulation seeds. Those results are retained as historical evidence of the project's evolution and should **not** be interpreted as the final V25 benchmark.
+
+This section describes an **earlier policy version**, **not V25**, and is **not the current final benchmark**.
+
+| Metric | Earlier Policy Benchmark |
 |---|---:|
-| Mean Net Business Value | **+$206,585.95** |
-| 95% Confidence Interval | **[$134,399; $278,772]** |
-| Mean Service-Level Improvement | **+2.11 percentage points** |
-| Value Win Rate | **83.33%** |
-| Service-Level Win Rate | **93.33%** |
-| Joint Win Rate | **83.33%** |
-
-The benchmark intentionally exposes the trade-off between stronger business outcomes and higher operating cost rather than reducing performance to a single metric.
+| Mean Net Business Value improvement | +$206,585.95 |
+| Service improvement | +2.11 pp |
+| Value win rate | 83.33% |
+| Service win rate | 93.33% |
 
 ---
 
@@ -536,7 +543,7 @@ Validation includes:
 - benchmark reproducibility
 - regression testing
 
-The repository currently passes **103 automated tests**.
+The repository currently passes **130 automated tests**.
 
 ---
 
